@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Lanchonete40App/.vs/Lanchonete40App
+/Lanchonete40App/Lanchonete40App/obj
+/Lanchonete40App/Lanchonete40App/bin/Debug/net8.0

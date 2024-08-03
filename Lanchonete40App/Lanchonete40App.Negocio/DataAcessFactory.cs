@@ -24,7 +24,7 @@ namespace Lanchonete40App.Negocio
             Port=5432;
             Database=MinhaLanchonete;
             User Id=postgres;
-            Password=129845;";
+            Password=12345;";
             NpgsqlConnection connection = new NpgsqlConnection(connectionString);
 
             var db = new QueryFactory(connection, compiler);

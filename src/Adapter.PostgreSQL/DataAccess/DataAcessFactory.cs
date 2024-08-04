@@ -14,7 +14,6 @@ using Npgsql;
 using System.Data.Entity;
 using System.Configuration;
 using Microsoft.AspNetCore.Builder;
-using Lanchonete40App.Negocio.Negocios;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Adapter.PostgreSQL.DataAccess

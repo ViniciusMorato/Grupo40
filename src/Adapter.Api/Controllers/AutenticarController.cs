@@ -1,4 +1,5 @@
-﻿using Core.Model;
+﻿using Core.Negocio.Model;
+using Core.Negocio.Negocios;
 using Core.Negocios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

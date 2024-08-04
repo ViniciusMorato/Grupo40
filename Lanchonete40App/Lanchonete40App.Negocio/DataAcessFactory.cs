@@ -12,6 +12,10 @@ using static SqlKata.Expressions;
 using System.IO;
 using Npgsql;
 using System.Data.Entity;
+using System.Configuration;
+using Microsoft.AspNetCore.Builder;
+using Lanchonete40App.Negocio.Negocios;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Lanchonete40App.Negocio
 {
@@ -20,12 +24,7 @@ namespace Lanchonete40App.Negocio
         public static QueryFactory SqlServerQueryFactory()
         {
             var compiler = new PostgresCompiler();
-            string connectionString = @"Host=localhost;
-            Port=5432;
-            Database=MinhaLanchonete;
-            User Id=postgres;
-            Password=12345;";
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            NpgsqlConnection connection = new NpgsqlConnection(WebApplication.CreateBuilder().Configuration.GetSection("AppSettings:connectionString").Value.ToString());
 
             var db = new QueryFactory(connection, compiler);
 

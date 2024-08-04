@@ -17,10 +17,10 @@
 
   <ItemGroup>
     <Reference Include="SqlKata">
-      <HintPath>..\..\..\querybuilder\SqlKata.Execution\bin\Release\netstandard2.0\SqlKata.dll</HintPath>
+      <HintPath>..\..\DLL\SqlKata.dll</HintPath>
     </Reference>
     <Reference Include="SqlKata.Execution">
-      <HintPath>..\..\..\querybuilder\SqlKata.Execution\bin\Release\netstandard2.0\SqlKata.Execution.dll</HintPath>
+      <HintPath>..\..\DLL\SqlKata.Execution.dll</HintPath>
     </Reference>
   </ItemGroup>
 

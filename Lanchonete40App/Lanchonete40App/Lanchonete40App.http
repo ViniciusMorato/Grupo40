@@ -1,6 +1,0 @@
-@Lanchonete40App_HostAddress = http://localhost:5266
-
-GET {{Lanchonete40App_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

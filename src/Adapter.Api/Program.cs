@@ -6,8 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Reflection;
 using System.Configuration;
-using Core.Negocio.Negocios;
 using Adapter.Api;
+using Adapter.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 

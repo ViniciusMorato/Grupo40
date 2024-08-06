@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using SqlKata;
-using SqlKata.Compilers;
+﻿using SqlKata.Compilers;
 using SqlKata.Execution;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Data;
-using System.Data.SQLite;
-using static SqlKata.Expressions;
-using System.IO;
 using Npgsql;
-using System.Data.Entity;
-using System.Configuration;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Adapter.PostgreSQL.DataAccess
 {

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Adapter.Jwt
 {
-    public class Jwt : IAuthentication
+    public class ImplJwt : IAuthentication
     {
         public string GerarToken(UsuarioModel usuarioModel, string secret)
         {

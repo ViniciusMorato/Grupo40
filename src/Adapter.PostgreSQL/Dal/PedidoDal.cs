@@ -1,4 +1,5 @@
-﻿using Adapter.PostgreSQL.DataAccess;
+﻿using Adapter.DataAcessLayer.DataAccess;
+using Adapter.DataAcessLayer.Util;
 using Core.Interfaces.Repositories;
 using Core.Negocio.Model;
 using Newtonsoft.Json;
@@ -10,9 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Adapter.PostgreSQL.DataAccess
+namespace Adapter.DataAcessLayer.DataAccess
 {
-    public class PedidoDados : IOrderRepository
+    public class PedidoDal : IOrderRepository
     {
         public void DeleteOrderById(Guid idOrder)
         {

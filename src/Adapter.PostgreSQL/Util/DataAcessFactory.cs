@@ -3,21 +3,16 @@ using SqlKata.Execution;
 using Npgsql;
 using Microsoft.AspNetCore.Builder;
 
-namespace Adapter.PostgreSQL.DataAccess
+namespace Adapter.DataAcessLayer.Util
 {
     public class DataAcessFactory
     {
         public static QueryFactory SqlServerQueryFactory()
         {
-            var compiler = new PostgresCompiler();
+            PostgresCompiler compiler = new PostgresCompiler();
             NpgsqlConnection connection = new NpgsqlConnection(WebApplication.CreateBuilder().Configuration.GetSection("AppSettings:connectionString").Value.ToString());
 
-            var db = new QueryFactory(connection, compiler);
-
-            db.Logger = result =>
-            {
-                Console.WriteLine(result.ToString());
-            };
+            QueryFactory db = new QueryFactory(connection, compiler);
 
             return db;
         }

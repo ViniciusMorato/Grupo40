@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Negocios
+namespace Core.Business
 {
-    internal class PedidoNegocio
+    internal class PedidoBusiness
     {
         private readonly IOrderRepository _orderRepository;
 
-        public PedidoNegocio(IOrderRepository orderRepository)
+        public PedidoBusiness(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }

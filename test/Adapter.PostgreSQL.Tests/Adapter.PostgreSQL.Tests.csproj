@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Adapter.PostgreSQL\Adapter.PostgreSQL.csproj" />
+    <ProjectReference Include="..\..\src\Adapter.PostgreSQL\Adapter.DataAcessLayer.csproj" />
   </ItemGroup>
 
 </Project>

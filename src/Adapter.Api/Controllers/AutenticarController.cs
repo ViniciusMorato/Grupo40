@@ -1,6 +1,6 @@
 ﻿using Adapter.Jwt;
 using Core.Negocio.Model;
-using Core.Negocios;
+using Core.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

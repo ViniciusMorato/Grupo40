@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers
@@ -8,18 +9,25 @@ namespace Adapter.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ClienteController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
+        public ClienteController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         [Authorize]
         [HttpPost("CadastrarCliente")]
-        public void CadastrarCliente()
+        public IActionResult CadastrarCliente()
         {
-
+            return Ok();
         }
 
         [Authorize]
         [HttpGet("IdentificarCliente")]
-        public void IdentificarCliente()
+        public IActionResult IdentificarCliente()
         {
-
+            return Ok();
         }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using Adapter.Jwt;
-using Core.Negocio.Model;
-using Core.Business;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Configuration;
+using Core.Model;
 
 namespace Adapter.Api.Controllers
 {

@@ -1,9 +1,9 @@
-﻿using Core.Interfaces.Authentication;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Core.Interfaces.Authentication;
 using System.Security.Claims;
 using System.Text;
 using Core.Model;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Adapter.Jwt
 {

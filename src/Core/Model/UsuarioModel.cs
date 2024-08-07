@@ -7,18 +7,18 @@ namespace Core.Model
     {
         private const string CpfPattern = @"[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
 
-        [Key] [Required] public int Id { get; set; }
+        [Key] [Required] public int Id { get; private set; }
 
         [Required(ErrorMessage = "Campo usuário é obrigatório")]
         [RegularExpression(CpfPattern, ErrorMessage = "Campo precisa ser um CPF válido")]
-        public string Usuario { get; set; }
+        public string Usuario { get; private set; }
 
         [Required(ErrorMessage = "Campo senha é obrigatório")]
         [MinLength(8, ErrorMessage = "Campo senha precisa conter no mínimo 8 caracteres")]
-        public string Senha { get; set; }
+        public string Senha { get; private set; }
 
         [Required]
         [EnumDataType(typeof(AccessControl))]
-        public string Papel { get; set; }
+        public AccessControl Papel { get; private set; }
     }
 }

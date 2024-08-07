@@ -1,17 +1,24 @@
 ﻿using SqlKata.Compilers;
 using SqlKata.Execution;
 using Npgsql;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 
 namespace Adapter.DataAccessLayer.Util
 {
     public class DataAccessFactory
     {
-        public static QueryFactory SqlServerQueryFactory()
-        {
-            PostgresCompiler compiler = new PostgresCompiler();
-            NpgsqlConnection connection = new NpgsqlConnection(WebApplication.CreateBuilder().Configuration.GetSection("AppSettings:connectionString").Value.ToString());
+        private readonly IConfiguration _configuration;
 
+        public DataAccessFactory(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public QueryFactory CreateQueryFactory()
+        {
+            var connectionString = _configuration.GetSection("AppSettings:connectionString").Value;
+            var connection = new NpgsqlConnection(connectionString);
+            PostgresCompiler compiler = new PostgresCompiler();
             QueryFactory db = new QueryFactory(connection, compiler);
 
             return db;

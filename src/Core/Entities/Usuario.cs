@@ -10,7 +10,7 @@ namespace Core.Entities
         [Key] [Required] public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo usuário é obrigatório")]
-        [RegularExpression(CpfPattern, ErrorMessage = "Campo precisa ser um CPF válido")]
+        [RegularExpression(CpfPattern, ErrorMessage = "Campo precisa ser um CPF válido: 123.123.123-12")]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Campo senha é obrigatório")]

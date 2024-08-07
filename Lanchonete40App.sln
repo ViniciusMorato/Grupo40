@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Api", "src\Adapter.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Api.Tests", "test\Adapter.Api.Tests\Adapter.Api.Tests.csproj", "{39230659-6BA0-46AE-80A7-DE8F53A13FD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.DataAcessLayer", "src\Adapter.PostgreSQL\Adapter.DataAcessLayer.csproj", "{3DF5B484-5A18-43C0-8898-9C17D9A51858}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.DataAccessLayer", "src\Adapter.PostgreSQL\Adapter.DataAccessLayer.csproj", "{3DF5B484-5A18-43C0-8898-9C17D9A51858}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.PostgreSQL.Tests", "test\Adapter.PostgreSQL.Tests\Adapter.PostgreSQL.Tests.csproj", "{FBB4A8E9-F31A-46DD-9323-2DEB6DB453BE}"
 EndProject

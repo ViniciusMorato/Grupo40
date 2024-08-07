@@ -15,7 +15,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Adapter.AutoMapper\Adapter.AutoMapper.csproj" />
+    <ProjectReference Include="..\Adapter.AutoMapper\Adapter.AutoMapper.csproj" />
     <ProjectReference Include="..\Adapter.Jwt\Adapter.Jwt.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>

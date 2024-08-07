@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Adapter.AutoMapper.AutoMapper
+namespace Adapter.AutoMapper
 {
     public class ConfigurationMapping : Profile
     {

@@ -4,11 +4,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Reflection;
-using System.Configuration;
 using Adapter.Jwt;
-using Adapter.AutoMapper.AutoMapper;
 using Adapter.Api.Util;
+using Adapter.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 

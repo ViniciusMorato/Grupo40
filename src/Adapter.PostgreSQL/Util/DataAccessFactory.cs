@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace Adapter.DataAccessLayer.Util
 {
-    public class DataAcessFactory
+    public class DataAccessFactory
     {
         public static QueryFactory SqlServerQueryFactory()
         {

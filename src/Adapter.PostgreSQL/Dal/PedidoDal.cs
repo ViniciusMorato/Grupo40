@@ -1,13 +1,20 @@
-﻿using Core.Interfaces.Repositories;
+﻿using Adapter.DataAccessLayer.Util;
+using Core.Interfaces.Repositories;
 using Core.Negocio.Model;
 using Newtonsoft.Json;
 using SqlKata.Execution;
-using Adapter.DataAccessLayer.Util;
 
 namespace Adapter.DataAccessLayer.Dal
 {
     public class PedidoDal : IOrderRepository
     {
+        private readonly QueryFactory _db;
+
+        public PedidoDal(DataAccessFactory dataAccessFactory)
+        {
+            _db = dataAccessFactory.CreateQueryFactory();
+        }
+
         public void DeleteOrderById(Guid idOrder)
         {
             throw new NotImplementedException();
@@ -30,16 +37,13 @@ namespace Adapter.DataAccessLayer.Dal
 
         public void TESTE()
         {
-            using (var db = DataAccessFactory.SqlServerQueryFactory())
-            {
-                var query = db.Query("tb_teste");
+            var query = _db.Query("tb_teste");
 
-                var accounts = query.Clone().Get();
-                Console.WriteLine(JsonConvert.SerializeObject(accounts, Newtonsoft.Json.Formatting.Indented));
+            var accounts = query.Clone().Get();
+            Console.WriteLine(JsonConvert.SerializeObject(accounts, Newtonsoft.Json.Formatting.Indented));
 
-                var exists = query.Clone().Exists();
-                Console.WriteLine(exists);
-            }
+            var exists = query.Clone().Exists();
+            Console.WriteLine(exists);
         }
 
         public void UpdateOrder(PedidoModel order)

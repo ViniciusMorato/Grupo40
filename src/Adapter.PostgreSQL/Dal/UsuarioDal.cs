@@ -1,10 +1,19 @@
-﻿using Core.Interfaces.Repositories;
+﻿using Adapter.DataAccessLayer.Util;
+using Core.Interfaces.Repositories;
 using Core.Model;
+using SqlKata.Execution;
 
 namespace Adapter.DataAccessLayer.Dal;
 
 public class UsuarioDal : IUserRepository
 {
+    private readonly QueryFactory _db;
+
+    public UsuarioDal(DataAccessFactory dataAccessFactory)
+    {
+        _db = dataAccessFactory.CreateQueryFactory();
+    }
+
     public IEnumerable<UsuarioModel> GetUsers()
     {
         throw new NotImplementedException();

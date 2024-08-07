@@ -1,4 +1,4 @@
-﻿using Core.Negocio.Model;
+﻿using Core.Model;
 
 namespace Core.Interfaces.Authentication
 {

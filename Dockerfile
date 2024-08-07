@@ -4,9 +4,9 @@ USER app
 
 WORKDIR /app
 
-EXPOSE 8080
+EXPOSE 5058
 
-EXPOSE 8081
+EXPOSE 7292
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
@@ -15,19 +15,12 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 COPY Lanchonete40App.sln ./
-COPY src/Core/Core.csproj src/Core/
-COPY src/Adapter.Api/Adapter.Api.csproj src/Adapter.Api/
-COPY src/Adapter.PostgreSQL/Adapter.PostgreSQL.csproj src/Adapter.PostgreSQL/
-
-COPY test/Core.Tests/Core.Tests.csproj test/Core.Tests/
-COPY test/Adapter.Api.Tests/Adapter.Api.Tests.csproj test/Adapter.Api.Tests/
-COPY test/Adapter.PostgreSQL.Tests/Adapter.PostgreSQL.Tests.csproj test/Adapter.PostgreSQL.Tests/
-
-RUN dotnet restore
 
 COPY src/ ./src/
 
-WORKDIR /src
+COPY test/ test/
+
+RUN dotnet restore
 
 RUN dotnet build . -c $BUILD_CONFIGURATION -o /app/build
 

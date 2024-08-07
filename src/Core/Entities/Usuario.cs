@@ -5,7 +5,7 @@ namespace Core.Entities
 {
     public sealed class Usuario
     {
-        private const string CpfPattern = @"[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
+        private const string CpfPattern = @"^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$";
 
         [Key] [Required] public int Id { get; set; }
 

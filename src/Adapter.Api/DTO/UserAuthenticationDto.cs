@@ -4,7 +4,7 @@ namespace Adapter.Api.DTO;
 
 public class UserAuthenticationDto
 {
-    private const string CpfPattern = @"[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
+    private const string CpfPattern = @"^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$";
 
     [Required(ErrorMessage = "Campo usuário é obrigatório")]
     [RegularExpression(CpfPattern, ErrorMessage = "Campo precisa ser um CPF válido")]

@@ -3,10 +3,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Adapter.Api
+namespace Adapter.Api.Util
 {
-    public class ConfigureSwaggerOptions
-    : IConfigureNamedOptions<SwaggerGenOptions>
+    public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
     {
         private readonly IApiVersionDescriptionProvider _provider;
 

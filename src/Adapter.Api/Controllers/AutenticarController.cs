@@ -1,4 +1,6 @@
-﻿using Adapter.Jwt;
+﻿using Adapter.Api.DTO;
+using Adapter.Jwt;
+using AutoMapper;
 using Core.Interfaces.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,11 +15,13 @@ namespace Adapter.Api.Controllers
     {
         private readonly AppSettings _appSettings;
         private readonly IAuthentication _authentication;
+        private readonly IMapper _mapper;
 
-        public AutenticarController(IOptions<AppSettings> options, IAuthentication authentication)
+        public AutenticarController(IOptions<AppSettings> options, IAuthentication authentication, IMapper mapper)
         {
             _appSettings = options.Value;
             _authentication = authentication;
+            _mapper = mapper;
         }
 
         [HttpPost("AutenticarUsuario")]

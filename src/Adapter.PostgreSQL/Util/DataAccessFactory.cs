@@ -3,7 +3,7 @@ using SqlKata.Execution;
 using Npgsql;
 using Microsoft.AspNetCore.Builder;
 
-namespace Adapter.DataAcessLayer.Util
+namespace Adapter.DataAccessLayer.Util
 {
     public class DataAcessFactory
     {

@@ -1,17 +1,10 @@
-﻿using Adapter.DataAcessLayer.DataAccess;
-using Adapter.DataAcessLayer.Util;
-using Core.Interfaces.Repositories;
+﻿using Core.Interfaces.Repositories;
 using Core.Negocio.Model;
 using Newtonsoft.Json;
 using SqlKata.Execution;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using Adapter.DataAccessLayer.Util;
 
-namespace Adapter.DataAcessLayer.DataAccess
+namespace Adapter.DataAccessLayer.Dal
 {
     public class PedidoDal : IOrderRepository
     {
@@ -37,7 +30,7 @@ namespace Adapter.DataAcessLayer.DataAccess
 
         public void TESTE()
         {
-            using (var db = DataAcessFactory.SqlServerQueryFactory())
+            using (var db = DataAccessFactory.SqlServerQueryFactory())
             {
                 var query = db.Query("tb_teste");
 

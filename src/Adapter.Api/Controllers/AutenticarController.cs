@@ -4,7 +4,7 @@ using AutoMapper;
 using Core.Interfaces.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Core.Model;
+using Core.Entities;
 
 namespace Adapter.Api.Controllers
 {
@@ -25,7 +25,7 @@ namespace Adapter.Api.Controllers
         }
 
         [HttpPost("AutenticarUsuario")]
-        public IActionResult AutenticarUsuario([FromBody] UsuarioModel usuario)
+        public IActionResult AutenticarUsuario([FromBody] Usuario usuario)
         {
             // Verifica se o usuário existe
             if (usuario == null)

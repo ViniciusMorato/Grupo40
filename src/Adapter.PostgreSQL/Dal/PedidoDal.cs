@@ -1,6 +1,6 @@
 ﻿using Adapter.DataAccessLayer.Util;
 using Core.Interfaces.Repositories;
-using Core.Negocio.Model;
+using Core.Entities;
 using Newtonsoft.Json;
 using SqlKata.Execution;
 
@@ -20,17 +20,17 @@ namespace Adapter.DataAccessLayer.Dal
             throw new NotImplementedException();
         }
 
-        public PedidoModel GetOrderById(Guid orderId)
+        public Pedido GetOrderById(Guid orderId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PedidoModel> GetOrders()
+        public IEnumerable<Pedido> GetOrders()
         {
             throw new NotImplementedException();
         }
 
-        public void InsertOrder(PedidoModel order)
+        public void InsertOrder(Pedido order)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace Adapter.DataAccessLayer.Dal
             Console.WriteLine(exists);
         }
 
-        public void UpdateOrder(PedidoModel order)
+        public void UpdateOrder(Pedido order)
         {
             throw new NotImplementedException();
         }

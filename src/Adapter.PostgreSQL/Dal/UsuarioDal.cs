@@ -1,6 +1,6 @@
 ﻿using Adapter.DataAccessLayer.Util;
 using Core.Interfaces.Repositories;
-using Core.Model;
+using Core.Entities;
 using SqlKata.Execution;
 
 namespace Adapter.DataAccessLayer.Dal;
@@ -14,22 +14,22 @@ public class UsuarioDal : IUserRepository
         _db = dataAccessFactory.CreateQueryFactory();
     }
 
-    public IEnumerable<UsuarioModel> GetUsers()
+    public IEnumerable<Usuario> GetUsers()
     {
         throw new NotImplementedException();
     }
 
-    public UsuarioModel GetUserById(Guid userId)
+    public Usuario GetUserById(Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public void InsertUser(UsuarioModel user)
+    public void InsertUser(Usuario user)
     {
         throw new NotImplementedException();
     }
 
-    public void UpdateUser(UsuarioModel user)
+    public void UpdateUser(Usuario user)
     {
         throw new NotImplementedException();
     }

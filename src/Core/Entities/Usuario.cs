@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Core.Enums;
 
-namespace Core.Model
+namespace Core.Entities
 {
-    public class UsuarioModel
+    public sealed class Usuario
     {
         private const string CpfPattern = @"[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
 
@@ -11,7 +11,7 @@ namespace Core.Model
 
         [Required(ErrorMessage = "Campo usuário é obrigatório")]
         [RegularExpression(CpfPattern, ErrorMessage = "Campo precisa ser um CPF válido")]
-        public string Usuario { get; set; }
+        public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Campo senha é obrigatório")]
         [MinLength(8, ErrorMessage = "Campo senha precisa conter no mínimo 8 caracteres")]

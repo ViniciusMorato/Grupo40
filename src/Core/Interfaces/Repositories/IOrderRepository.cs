@@ -1,13 +1,13 @@
-﻿using Core.Negocio.Model;
+﻿using Core.Entities;
 
 namespace Core.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        IEnumerable<PedidoModel> GetOrders();
-        PedidoModel GetOrderById(Guid orderId);
-        void InsertOrder(PedidoModel order);
-        void UpdateOrder(PedidoModel order);
+        IEnumerable<Pedido> GetOrders();
+        Pedido GetOrderById(Guid orderId);
+        void InsertOrder(Pedido order);
+        void UpdateOrder(Pedido order);
         void DeleteOrderById(Guid idOrder);
     }
 }

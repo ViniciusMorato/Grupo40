@@ -15,7 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Adapter.AutoMapper\Adapter.AutoMapper.csproj"/>
         <ProjectReference Include="..\Adapter.Jwt\Adapter.Jwt.csproj"/>
         <ProjectReference Include="..\Adapter.PostgreSQL\Adapter.DataAccessLayer.csproj"/>
         <ProjectReference Include="..\Core\Core.csproj"/>

@@ -2,7 +2,6 @@
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers

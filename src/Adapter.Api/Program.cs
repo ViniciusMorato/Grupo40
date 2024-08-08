@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Adapter.Jwt;
 using Adapter.Api.Util;
-using Adapter.AutoMapper;
 using Adapter.DataAccessLayer.Context;
 using Adapter.DataAccessLayer.Repositories;
 using Core.Business;
@@ -99,7 +98,7 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
-builder.Services.AddAutoMapper(typeof(ConfigurationMapping));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

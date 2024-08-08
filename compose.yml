@@ -21,7 +21,7 @@ services:
       - 5058:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development     
-      - ConnectionStrings__DefaultConnection=Host=db;Database=MinhaLanchonete;Username=postgres;Password=postgres;
+      - ConnectionStrings__DefaultConnection=User ID =postgres;Password=postgres;Server=db;Port=5432;Database=MinhaLanchonete; Integrated Security=true;Pooling=true;
     networks:
       - app-network
 
@@ -29,3 +29,4 @@ volumes:
   pgdata:
 networks:
   app-network:
+    driver: bridge

@@ -1,24 +1,14 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Adapter.DataAccessLayer.Context
 {
     public class PostgreSqlContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
-
-        public PostgreSqlContext(IConfiguration configuration)
+        public PostgreSqlContext(DbContextOptions<PostgreSqlContext> options) : base(options)
         {
-            Configuration = configuration;
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionString = Configuration.GetSection("AppSettings:connectionString").Value;
-            optionsBuilder.UseNpgsql(connectionString);
-        }
     }
 }

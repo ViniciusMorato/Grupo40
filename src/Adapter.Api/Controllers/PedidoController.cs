@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers
@@ -8,11 +9,18 @@ namespace Adapter.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class PedidoController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
+        public PedidoController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         [Authorize]
         [HttpPost("FinalizarPedido")]
-        public void FinalizarPedido()
+        public IActionResult FinalizarPedido()
         {
-
+            return Ok();
         }
     }
 }

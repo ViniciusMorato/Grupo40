@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers
@@ -8,32 +9,39 @@ namespace Adapter.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ProdutoController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
+        public ProdutoController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         [Authorize]
         [HttpPost("CriarProduto")]
-        public void CriarProduto2()
+        public IActionResult CriarProduto2()
         {
-
+            return Ok();
         }
 
         [Authorize]
         [HttpPatch("EditarProduto")]
-        public void EditarProduto()
+        public IActionResult EditarProduto()
         {
-
+            return Ok();
         }
 
         [Authorize]
         [HttpDelete("RemoverProduto")]
-        public void RemoverProduto()
+        public IActionResult RemoverProduto()
         {
-
+            return Ok();
         }
 
         [Authorize]
         [HttpGet("BuscarProduto")]
-        public void BuscarProduto()
+        public IActionResult BuscarProduto()
         {
-
+            return Ok();
         }
     }
 }

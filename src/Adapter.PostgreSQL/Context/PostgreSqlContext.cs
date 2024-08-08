@@ -17,7 +17,8 @@ namespace Adapter.DataAccessLayer.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AppSettings:connectionString"));
+            var connectionString = Configuration.GetSection("AppSettings:connectionString").Value;
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 }

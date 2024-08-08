@@ -22,8 +22,10 @@ builder.Services.AddControllers();
 builder.Services.AddOptions();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
+var connectionString = builder.Configuration.GetSection("AppSettings:connectionString").Value;
+
 builder.Services.AddDbContext<PostgreSqlContext>(option =>
-    option.UseNpgsql(builder.Configuration.GetConnectionString("AppSettings:connectionString")));
+    option.UseNpgsql(connectionString));
 
 // Registrar a implementação Jwt para a interface IAuthentication
 builder.Services.AddSingleton<IAuthentication, ImplJwt>();

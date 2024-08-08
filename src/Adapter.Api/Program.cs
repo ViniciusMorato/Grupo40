@@ -7,18 +7,30 @@ using System.Text;
 using Adapter.Jwt;
 using Adapter.Api.Util;
 using Adapter.AutoMapper;
-using Adapter.DataAccessLayer.Util;
+using Adapter.DataAccessLayer.Context;
+using Adapter.DataAccessLayer.Repositories;
+using Core.Business;
 using Core.Interfaces.Authentication;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSingleton<DataAccessFactory>();
 builder.Services.AddOptions();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+builder.Services.AddDbContext<PostgreSqlContext>(option =>
+    option.UseNpgsql(builder.Configuration.GetConnectionString("AppSettings:connectionString")));
+
 // Registrar a implementação Jwt para a interface IAuthentication
 builder.Services.AddSingleton<IAuthentication, ImplJwt>();
+builder.Services.AddScoped<IUserRepository, UsuarioDal>();
+builder.Services.AddTransient<IUserService, UsuarioBusiness>();
+
 
 builder.Services.AddApiVersioning(o =>
 {

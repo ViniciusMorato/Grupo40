@@ -20,7 +20,7 @@ services:
     ports:
       - 5058:8080
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development     
       - ConnectionStrings__DefaultConnection=Host=db;Database=MinhaLanchonete;Username=postgres;Password=postgres;
     networks:
       - app-network

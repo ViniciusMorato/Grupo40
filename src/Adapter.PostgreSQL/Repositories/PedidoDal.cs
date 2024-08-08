@@ -1,19 +1,18 @@
-﻿using Adapter.DataAccessLayer.Util;
+﻿using Adapter.DataAccessLayer.Context;
 using Core.Interfaces.Repositories;
 using Core.Entities;
-using Newtonsoft.Json;
-using SqlKata.Execution;
 
-namespace Adapter.DataAccessLayer.Dal
+namespace Adapter.DataAccessLayer.Repositories
 {
     public class PedidoDal : IOrderRepository
     {
-        private readonly QueryFactory _db;
+        private readonly PostgreSqlContext _context;
 
-        public PedidoDal(PostgreSqlContext postgreSqlContext)
+        public PedidoDal(PostgreSqlContext context)
         {
-            _db = postgreSqlContext.CreateQueryFactory();
+            _context = context;
         }
+
 
         public void DeleteOrderById(Guid idOrder)
         {
@@ -33,17 +32,6 @@ namespace Adapter.DataAccessLayer.Dal
         public void InsertOrder(Pedido order)
         {
             throw new NotImplementedException();
-        }
-
-        public void TESTE()
-        {
-            var query = _db.Query("tb_teste");
-
-            var accounts = query.Clone().Get();
-            Console.WriteLine(JsonConvert.SerializeObject(accounts, Newtonsoft.Json.Formatting.Indented));
-
-            var exists = query.Clone().Exists();
-            Console.WriteLine(exists);
         }
 
         public void UpdateOrder(Pedido order)

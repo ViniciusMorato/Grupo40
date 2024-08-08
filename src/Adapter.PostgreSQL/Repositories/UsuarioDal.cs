@@ -1,18 +1,18 @@
-﻿using Adapter.DataAccessLayer.Util;
+﻿using Adapter.DataAccessLayer.Context;
 using Core.Interfaces.Repositories;
 using Core.Entities;
-using SqlKata.Execution;
 
-namespace Adapter.DataAccessLayer.Dal;
+namespace Adapter.DataAccessLayer.Repositories;
 
 public class UsuarioDal : IUserRepository
 {
-    private readonly QueryFactory _db;
+    private readonly PostgreSqlContext _context;
 
-    public UsuarioDal(PostgreSqlContext postgreSqlContext)
+    public UsuarioDal(PostgreSqlContext context)
     {
-        _db = postgreSqlContext.CreateQueryFactory();
+        _context = context;
     }
+
 
     public IEnumerable<Usuario> GetUsers()
     {
@@ -21,7 +21,7 @@ public class UsuarioDal : IUserRepository
 
     public Usuario? GetUserById(string cpf)
     {
-        throw new NotImplementedException();
+        return _context.Usuarios.FirstOrDefault(user => user.Cpf == cpf);
     }
 
     public Usuario InsertUser(Usuario user)

@@ -1,27 +1,23 @@
-﻿using SqlKata.Compilers;
-using SqlKata.Execution;
-using Npgsql;
+﻿using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Adapter.DataAccessLayer.Util
+namespace Adapter.DataAccessLayer.Context
 {
-    public class DataAccessFactory
+    public class PostgreSqlContext : DbContext
     {
-        private readonly IConfiguration _configuration;
+        protected readonly IConfiguration Configuration;
 
-        public DataAccessFactory(IConfiguration configuration)
+        public PostgreSqlContext(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
-        public QueryFactory CreateQueryFactory()
-        {
-            var connectionString = _configuration.GetSection("AppSettings:connectionString").Value;
-            var connection = new NpgsqlConnection(connectionString);
-            PostgresCompiler compiler = new PostgresCompiler();
-            QueryFactory db = new QueryFactory(connection, compiler);
+        public DbSet<Usuario> Usuarios { get; set; }
 
-            return db;
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AppSettings:connectionString"));
         }
     }
 }

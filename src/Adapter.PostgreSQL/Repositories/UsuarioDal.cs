@@ -9,9 +9,9 @@ public class UsuarioDal : IUserRepository
 {
     private readonly QueryFactory _db;
 
-    public UsuarioDal(DataAccessFactory dataAccessFactory)
+    public UsuarioDal(PostgreSqlContext postgreSqlContext)
     {
-        _db = dataAccessFactory.CreateQueryFactory();
+        _db = postgreSqlContext.CreateQueryFactory();
     }
 
     public IEnumerable<Usuario> GetUsers()
@@ -19,12 +19,12 @@ public class UsuarioDal : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Usuario GetUserById(Guid userId)
+    public Usuario? GetUserById(string cpf)
     {
         throw new NotImplementedException();
     }
 
-    public void InsertUser(Usuario user)
+    public Usuario InsertUser(Usuario user)
     {
         throw new NotImplementedException();
     }
@@ -34,7 +34,7 @@ public class UsuarioDal : IUserRepository
         throw new NotImplementedException();
     }
 
-    public void DeleteUserById(Guid idUser)
+    public void DeleteUserById(int idUser)
     {
         throw new NotImplementedException();
     }

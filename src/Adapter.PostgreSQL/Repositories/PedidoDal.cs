@@ -10,9 +10,9 @@ namespace Adapter.DataAccessLayer.Dal
     {
         private readonly QueryFactory _db;
 
-        public PedidoDal(DataAccessFactory dataAccessFactory)
+        public PedidoDal(PostgreSqlContext postgreSqlContext)
         {
-            _db = dataAccessFactory.CreateQueryFactory();
+            _db = postgreSqlContext.CreateQueryFactory();
         }
 
         public void DeleteOrderById(Guid idOrder)

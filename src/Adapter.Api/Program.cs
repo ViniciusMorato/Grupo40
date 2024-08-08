@@ -6,16 +6,31 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Adapter.Jwt;
 using Adapter.Api.Util;
-using Adapter.AutoMapper;
+using Adapter.DataAccessLayer.Context;
+using Adapter.DataAccessLayer.Repositories;
+using Core.Business;
+using Core.Interfaces.Authentication;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-
 builder.Services.AddOptions();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<PostgreSqlContext>(option => option.UseNpgsql(connectionString));
+
+// Registrar a implementação Jwt para a interface IAuthentication
+builder.Services.AddSingleton<IAuthentication, ImplJwt>();
+builder.Services.AddScoped<IUserRepository, UsuarioDal>();
+builder.Services.AddTransient<IUserService, UsuarioBusiness>();
+
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -43,24 +58,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-      {
+    {
         {
-          new OpenApiSecurityScheme
-          {
-            Reference = new OpenApiReference
-              {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-              },
-              Scheme = "oauth2",
-              Name = "Bearer",
-              In = ParameterLocation.Header,
-
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
             },
             new List<string>()
-          }
-        });
+        }
+    });
 });
+
+
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 builder.Services.AddCors();
 builder.Services.AddControllers();
@@ -76,12 +92,14 @@ builder.Services.AddAuthentication(x =>
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("AppSettings:Secret").Value.ToString())),
+        IssuerSigningKey =
+            new SymmetricSecurityKey(
+                Encoding.ASCII.GetBytes(builder.Configuration.GetSection("AppSettings:Secret").Value.ToString())),
         ValidateIssuer = false,
         ValidateAudience = false
     };
 });
-builder.Services.AddAutoMapper(typeof(ConfigurationMapping));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

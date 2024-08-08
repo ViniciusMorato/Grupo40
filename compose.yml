@@ -1,21 +1,34 @@
 services:
   db:
     image: postgres:12.19
-    restart: always   
-    shm_size: 128mb 
-    env_file:
-        - .env
+    restart: always
+    shm_size: 128mb
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=MinhaLanchonete
     volumes:
-      - pgdata:/var/lib/postgresql/data 
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
   app:
     depends_on:
-        - db
+      - db
     build:
-        context: .
-        dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
-        - "8080:8080"
-        - "8081:8081"
+      - 5058:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development     
+      - ConnectionStrings__DefaultConnection=User ID =postgres;Password=postgres;Server=db;Port=5432;Database=MinhaLanchonete;;Pooling=true;
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+networks:
+  app-network:
+    driver: bridge

@@ -1,6 +1,6 @@
-﻿namespace Core.Negocio.Model
+﻿namespace Core.Entities
 {
-    public class ProdutoModel
+    public sealed class Produto
     {
         public int Id { get; set; }
         public string descricao { get; set; }

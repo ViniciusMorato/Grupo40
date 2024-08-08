@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Negocio.Model
+namespace Core.Entities
 {
-    public class PedidoModel
+    public sealed class Pedido
     {
         public int Id { get; set; }
         public int UsuarioId { get; set; }
-        public ICollection<ItemPedidoModel> itemPedidos { get; set; }
+        public ICollection<ItemPedido> itemPedidos { get; set; }
 
     }
 }

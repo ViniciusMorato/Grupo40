@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.PostgreSQL.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Jwt", "src\Adapter.Jwt\Adapter.Jwt.csproj", "{A637A422-7A72-49DA-8C72-8F49D17B17F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.AutoMapper", "src\Adapter.AutoMapper\Adapter.AutoMapper.csproj", "{677695D2-070F-4BE3-89FD-09130CF4B826}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,10 +55,6 @@ Global
 		{A637A422-7A72-49DA-8C72-8F49D17B17F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A637A422-7A72-49DA-8C72-8F49D17B17F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A637A422-7A72-49DA-8C72-8F49D17B17F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{677695D2-070F-4BE3-89FD-09130CF4B826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{677695D2-070F-4BE3-89FD-09130CF4B826}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{677695D2-070F-4BE3-89FD-09130CF4B826}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{677695D2-070F-4BE3-89FD-09130CF4B826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,7 +67,6 @@ Global
 		{3DF5B484-5A18-43C0-8898-9C17D9A51858} = {72FB904A-2B5D-455D-A15A-FA68A8325123}
 		{FBB4A8E9-F31A-46DD-9323-2DEB6DB453BE} = {C5FE4058-3EB9-4558-A84D-A34B47DE06F9}
 		{A637A422-7A72-49DA-8C72-8F49D17B17F4} = {72FB904A-2B5D-455D-A15A-FA68A8325123}
-		{677695D2-070F-4BE3-89FD-09130CF4B826} = {72FB904A-2B5D-455D-A15A-FA68A8325123}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04E0BDC1-CACB-4865-8017-51DCDDE6F961}

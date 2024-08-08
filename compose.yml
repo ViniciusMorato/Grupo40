@@ -3,12 +3,16 @@ services:
     image: postgres:12.19
     restart: always
     shm_size: 128mb
+    ports:
+      - "5433:5432"
     environment:
-      - POSTGRES_PASSWORD=12345
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=MinhaLanchonete
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
   app:
     depends_on:
       - db
@@ -16,8 +20,15 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9000:5058"
-      - "9001:7292"
+      - 5058:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development     
+      - ConnectionStrings__DefaultConnection=User ID =postgres;Password=postgres;Server=db;Port=5432;Database=MinhaLanchonete; Integrated Security=true;Pooling=true;
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+networks:
+  app-network:
+    driver: bridge

@@ -1,5 +1,4 @@
-﻿using Adapter.Api.DTO;
-using Adapter.Jwt;
+﻿using Adapter.Jwt;
 using AutoMapper;
 using Core.Interfaces.Authentication;
 using Microsoft.AspNetCore.Mvc;

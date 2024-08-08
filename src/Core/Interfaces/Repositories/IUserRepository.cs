@@ -5,9 +5,9 @@ namespace Core.Interfaces.Repositories
     public interface IUserRepository
     {
         IEnumerable<Usuario> GetUsers();
-        Usuario GetUserById(Guid userId);
-        void InsertUser(Usuario user);
+        Usuario? GetUserById(string cpf);
+        Usuario InsertUser(Usuario user);
         void UpdateUser(Usuario user);
-        void DeleteUserById(Guid idUser);
+        void DeleteUserById(int idUser);
     }
 }

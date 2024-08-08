@@ -6,19 +6,31 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Adapter.Jwt;
 using Adapter.Api.Util;
-using Adapter.AutoMapper;
-using Adapter.DataAccessLayer.Util;
+using Adapter.DataAccessLayer.Context;
+using Adapter.DataAccessLayer.Repositories;
+using Core.Business;
 using Core.Interfaces.Authentication;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSingleton<DataAccessFactory>();
 builder.Services.AddOptions();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<PostgreSqlContext>(option => option.UseNpgsql(connectionString));
+
 // Registrar a implementação Jwt para a interface IAuthentication
 builder.Services.AddSingleton<IAuthentication, ImplJwt>();
+builder.Services.AddScoped<IUserRepository, UsuarioDal>();
+builder.Services.AddTransient<IUserService, UsuarioBusiness>();
+
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -87,7 +99,7 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
-builder.Services.AddAutoMapper(typeof(ConfigurationMapping));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

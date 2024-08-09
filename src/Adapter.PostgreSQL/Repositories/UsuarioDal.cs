@@ -16,7 +16,7 @@ public class UsuarioDal : IUserRepository
 
     public IEnumerable<Usuario> GetUsers()
     {
-        throw new NotImplementedException();
+        return _context.Usuarios;
     }
 
     public Usuario? GetUserById(string cpf)
@@ -26,7 +26,9 @@ public class UsuarioDal : IUserRepository
 
     public Usuario InsertUser(Usuario user)
     {
-        throw new NotImplementedException();
+        _context.Usuarios.Add(user);
+        _context.SaveChanges();
+        return user;
     }
 
     public void UpdateUser(Usuario user)

@@ -20,6 +20,13 @@ namespace Adapter.Api.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+        public IEnumerable<Usuario> BuscaUsuarios()
+        {
+            return _userService.GetUsers();
+        }
+
         // [Authorize]
         [HttpPost("CadastrarCliente")]
         [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]

@@ -14,11 +14,18 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
             return user;
         }
 
-        return userRepository.InsertUser(usuario);
+        Usuario addNewUser = userRepository.InsertUser(usuario);
+      
+        return addNewUser;
     }
 
     public Usuario? GetUserByCpf(string cpf)
     {
         return userRepository.GetUserById(cpf);
+    }
+
+    public IEnumerable<Usuario> GetUsers()
+    {
+        return userRepository.GetUsers();
     }
 }

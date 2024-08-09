@@ -4,7 +4,7 @@ namespace Adapter.Api.DTO;
 
 public class AddUserDto
 {
-    private const string CpfPattern = @"^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$";
+    private const string CpfPattern = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
 
     [Required]
     [MaxLength(100, ErrorMessage = "Nome não pode ultrapassar 100 caracteres")]

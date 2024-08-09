@@ -22,6 +22,8 @@ namespace Adapter.Api.Controllers
 
         // [Authorize]
         [HttpPost("CadastrarCliente")]
+        [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CadastrarCliente([FromBody] AddUserDto user)
         {
             Usuario userEntity = _mapper.Map<Usuario>(user);
@@ -34,6 +36,8 @@ namespace Adapter.Api.Controllers
 
         // [Authorize] 
         [HttpGet("{cpf}")]
+        [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult IdentificarCliente(string cpf)
         {
             var user = _userService.GetUserByCpf(cpf);

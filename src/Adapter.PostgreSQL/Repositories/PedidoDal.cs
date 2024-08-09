@@ -1,8 +1,8 @@
-﻿using Adapter.DataAccessLayer.Context;
+﻿using Adapter.PostgreSQL.Context;
 using Core.Interfaces.Repositories;
 using Core.Entities;
 
-namespace Adapter.DataAccessLayer.Repositories
+namespace Adapter.PostgreSQL.Repositories
 {
     public class PedidoDal : IOrderRepository
     {

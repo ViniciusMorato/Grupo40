@@ -4,7 +4,7 @@ services:
     restart: always
     shm_size: 128mb
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
@@ -22,8 +22,8 @@ services:
     ports:
       - 5058:8080
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development     
-      - ConnectionStrings__DefaultConnection=User ID =postgres;Password=postgres;Server=db;Port=5432;Database=MinhaLanchonete;;Pooling=true;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=MinhaLanchonete;Pooling=true;
     networks:
       - app-network
 

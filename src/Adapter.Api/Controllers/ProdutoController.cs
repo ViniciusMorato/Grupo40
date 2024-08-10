@@ -1,5 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Adapter.Api.DTO;
+using AutoMapper;
+using Core.Entities;
+using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers
@@ -10,38 +12,68 @@ namespace Adapter.Api.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IProductService _productService;
 
-        public ProdutoController(IMapper mapper)
+        public ProdutoController(IMapper mapper, IProductService productService)
         {
             _mapper = mapper;
+            _productService = productService;
         }
 
-        [Authorize]
         [HttpPost("CriarProduto")]
-        public IActionResult CriarProduto2()
+        [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CriarProduto([FromBody] AddProductDto productDto)
         {
-            return Ok();
+            Produto productEntity = _mapper.Map<Produto>(productDto);
+            _productService.AddNewProduct(productEntity);
+
+            return CreatedAtAction(nameof(BuscarProduto),
+                new { x = productEntity.Id }, productEntity);
         }
 
-        [Authorize]
-        [HttpPatch("EditarProduto")]
-        public IActionResult EditarProduto()
+        [HttpGet("ListaProdutos")]
+        [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
+        public IEnumerable<Produto> BuscarProdutos()
         {
-            return Ok();
+            return _productService.GetProducts();
         }
 
-        [Authorize]
-        [HttpDelete("RemoverProduto")]
-        public IActionResult RemoverProduto()
+        [HttpPut( Name = "id")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult EditarProduto(int id, [FromBody] UpdateProductDto productDto)
         {
-            return Ok();
+            var product = _productService.GetProductById(id);
+            if (product == null) return NotFound();
+            _mapper.Map(productDto, product);
+            _productService.UpdateProduct(product);
+            return NoContent();
         }
 
-        [Authorize]
-        [HttpGet("BuscarProduto")]
-        public IActionResult BuscarProduto()
+
+        [HttpDelete(Name = "id")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult RemoverProduto(int id)
         {
-            return Ok();
+            var product = _productService.GetProductById(id);
+            if (product == null) return NotFound();
+            _productService.DeleteProduct(product);
+            return NoContent();
+        }
+
+        [HttpGet(Name = "id")]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult BuscarProduto(int id)
+        {
+            var product = _productService.GetProductById(id);
+
+            if (product == null) return NotFound();
+
+            ProductDto productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
         }
     }
 }

@@ -7,13 +7,16 @@ using System.Text;
 using Adapter.Jwt;
 using Adapter.Api.Util;
 using Adapter.PostgreSQL;
+using Core.Business;
 using Core.Interfaces.Authentication;
+using Core.Interfaces.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistence(builder.Configuration);
-
+builder.Services.AddScoped<IUserService, UsuarioBusiness>();
+builder.Services.AddScoped<IProductService, ProdutoBusiness>();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOptions();

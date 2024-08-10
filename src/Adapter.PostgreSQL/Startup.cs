@@ -1,8 +1,6 @@
 ﻿using Adapter.PostgreSQL.Context;
 using Adapter.PostgreSQL.Repositories;
-using Core.Business;
 using Core.Interfaces.Repositories;
-using Core.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +14,9 @@ public static class Startup
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<PostgreSqlContext>(options =>
             options.UseNpgsql(connectionString));
+
         services.AddScoped<IUserRepository, UsuarioDal>();
-        services.AddScoped<IUserService, UsuarioBusiness>();
+        services.AddScoped<IProductRepository, ProdutoDal>();
         return services;
     }
 }

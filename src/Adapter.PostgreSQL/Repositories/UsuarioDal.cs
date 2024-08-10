@@ -36,7 +36,7 @@ public class UsuarioDal : IUserRepository
         throw new NotImplementedException();
     }
 
-    public void DeleteUserById(int idUser)
+    public void DeleteUserById(Usuario user)
     {
         throw new NotImplementedException();
     }

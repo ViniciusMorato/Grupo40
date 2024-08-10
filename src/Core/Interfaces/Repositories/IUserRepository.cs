@@ -8,6 +8,6 @@ namespace Core.Interfaces.Repositories
         Usuario? GetUserByCpf(string cpf);
         Usuario InsertUser(Usuario user);
         void UpdateUser(Usuario user);
-        void DeleteUserById(int idUser);
+        void DeleteUserById(Usuario user);
     }
 }

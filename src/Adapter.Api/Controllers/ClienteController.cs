@@ -26,21 +26,21 @@ namespace Adapter.Api.Controllers
         {
             return _userService.GetUsers();
         }
-        
+
         [HttpPost("CadastrarCliente")]
         [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CadastrarCliente([FromBody] AddUserDto user)
+        public IActionResult CadastrarCliente([FromBody] AddUserDto userDto)
         {
-            Usuario userEntity = _mapper.Map<Usuario>(user);
+            Usuario userEntity = _mapper.Map<Usuario>(userDto);
             _userService.AddNewUser(userEntity);
 
             return CreatedAtAction(nameof(IdentificarCliente),
-                new { cpf = user.Cpf },
-                user);
+                new { cpf = userEntity.Cpf },
+                userEntity);
         }
 
-        [HttpGet(Name="cpf")]
+        [HttpGet(Name = "cpf")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult IdentificarCliente(string cpf)

@@ -6,7 +6,7 @@ public class AddUserDto
 {
     private const string CpfPattern = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
 
-    [Required]
+    [Required(ErrorMessage = "Campo nome é obrigatório")]
     [MaxLength(100, ErrorMessage = "Nome não pode ultrapassar 100 caracteres")]
     public string Nome { get; set; }
 

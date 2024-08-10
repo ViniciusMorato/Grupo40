@@ -8,6 +8,7 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
 {
     public Usuario AddNewUser(Usuario usuario)
     {
+        usuario.Validade();
         var user = GetUserByCpf(usuario.Cpf);
         if (user != null)
         {

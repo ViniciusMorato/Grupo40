@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Core.Enums;
 
 namespace Core.Entities
 {
@@ -8,12 +9,23 @@ namespace Core.Entities
         [Required] [MaxLength(100)] public string Descricao { get; private set; }
         [Required] public decimal Preco { get; private set; }
         [Required] public int Estoque { get; private set; }
+        [Required] public Category Categoria { get; private set; }
+
 
         public void Validade()
         {
             ValidadeDescricao();
             ValidadePreco();
             ValidadeEstoque();
+            ValidadeCategoria();
+        }
+
+        private void ValidadeCategoria()
+        {
+            if (!Enum.IsDefined(typeof(Category), Categoria))
+            {
+                throw new ArgumentException("Categoria de produto inválida");
+            }
         }
 
         private void ValidadeDescricao()

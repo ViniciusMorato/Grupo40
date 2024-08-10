@@ -19,7 +19,7 @@ public class UsuarioDal : IUserRepository
         return _context.Usuarios;
     }
 
-    public Usuario? GetUserById(string cpf)
+    public Usuario? GetUserByCpf(string cpf)
     {
         return _context.Usuarios.FirstOrDefault(user => user.Cpf == cpf);
     }

@@ -20,14 +20,13 @@ namespace Adapter.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("Clientes")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         public IEnumerable<Usuario> BuscaUsuarios()
         {
             return _userService.GetUsers();
         }
-
-        // [Authorize]
+        
         [HttpPost("CadastrarCliente")]
         [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,15 +40,14 @@ namespace Adapter.Api.Controllers
                 user);
         }
 
-        // [Authorize] 
-        [HttpGet("{cpf}")]
+        [HttpGet(Name="cpf")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult IdentificarCliente(string cpf)
         {
             var user = _userService.GetUserByCpf(cpf);
 
-            if (user != null) return NotFound();
+            if (user == null) return NotFound();
 
             UserDto userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);

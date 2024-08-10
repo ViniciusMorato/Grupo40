@@ -22,7 +22,7 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
 
     public Usuario? GetUserByCpf(string cpf)
     {
-        return userRepository.GetUserById(cpf);
+        return userRepository.GetUserByCpf(cpf);
     }
 
     public IEnumerable<Usuario> GetUsers()

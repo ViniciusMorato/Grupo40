@@ -9,5 +9,5 @@ public class UserDto
     public string SobreNome { get; set; }
     public string Cpf { get; set; }
     public string Senha { get; set; }
-    public AccessControl Papel { get; set; }
+    public string Email { get; set; }
 }

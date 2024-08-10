@@ -21,4 +21,8 @@ public class AddUserDto
     [Required(ErrorMessage = "Campo senha é obrigatório")]
     [MinLength(8, ErrorMessage = "Campo senha precisa conter no mínimo 8 caracteres")]
     public string Senha { get; set; }
+
+    [Required(ErrorMessage = "Campo email é obrigatório")]
+    [EmailAddress]
+    public string Email { get; set; }
 }

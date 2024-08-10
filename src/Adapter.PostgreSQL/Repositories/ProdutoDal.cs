@@ -39,5 +39,6 @@ public class ProdutoDal : IProductRepository
     public void DeleteProduct(Produto product)
     {
         _context.Produtos.Remove(product);
+        _context.SaveChanges();
     }
 }

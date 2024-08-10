@@ -40,4 +40,9 @@ public class UsuarioDal : IUserRepository
     {
         throw new NotImplementedException();
     }
+
+    public Usuario? GetUserById(int id)
+    {
+        return _context.Usuarios.FirstOrDefault(user => user.Id == id);
+    }
 }

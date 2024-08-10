@@ -4,10 +4,8 @@ namespace Core.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        IEnumerable<Pedido> GetOrders();
-        Pedido GetOrderById(Guid orderId);
-        void InsertOrder(Pedido order);
-        void UpdateOrder(Pedido order);
-        void DeleteOrderById(Guid idOrder);
+        Pedido? GetOrderById(int orderId);
+        List<Pedido>? GetOrderByUsuario(int usuario);
+        Pedido InsertUpdateOrder(Pedido order);
     }
 }

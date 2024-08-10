@@ -13,30 +13,29 @@ namespace Adapter.PostgreSQL.Repositories
             _context = context;
         }
 
-
-        public void DeleteOrderById(Guid idOrder)
+        public List<Pedido> GetOrderByUsuario(int usuario)
         {
-            throw new NotImplementedException();
+            return _context.Pedido.Where(p => p.Usuario == usuario).ToList();
         }
 
-        public Pedido GetOrderById(Guid orderId)
+        public Pedido? GetOrderById(int orderId)
         {
-            throw new NotImplementedException();
+            return _context.Pedido.FirstOrDefault(p => p.Id == orderId);
         }
 
-        public IEnumerable<Pedido> GetOrders()
+        public Pedido InsertUpdateOrder(Pedido order)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                _context.Pedido.Add(order);
+                _context.SaveChanges();
 
-        public void InsertOrder(Pedido order)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateOrder(Pedido order)
-        {
-            throw new NotImplementedException();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

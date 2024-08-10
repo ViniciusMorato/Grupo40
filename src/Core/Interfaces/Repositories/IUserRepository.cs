@@ -6,6 +6,7 @@ namespace Core.Interfaces.Repositories
     {
         IEnumerable<Usuario> GetUsers();
         Usuario? GetUserByCpf(string cpf);
+        Usuario? GetUserById(int id);
         Usuario InsertUser(Usuario user);
         void UpdateUser(Usuario user);
         void DeleteUserById(Usuario user);

@@ -11,12 +11,14 @@ using Core.Business;
 using Core.Interfaces.Authentication;
 using Core.Interfaces.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddScoped<IUserService, UsuarioBusiness>();
+builder.Services.AddScoped<IUserAddressService, UsuarioEnderecoBusiness>();
 builder.Services.AddScoped<IProductService, ProdutoBusiness>();
+builder.Services.AddScoped<IOrderService, PedidoBusiness>();
+builder.Services.AddScoped<IOrderItensService, PedidoItemBusiness>();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOptions();

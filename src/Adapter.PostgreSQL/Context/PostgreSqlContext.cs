@@ -11,6 +11,9 @@ namespace Adapter.PostgreSQL.Context
         }
 
         public DbSet<Usuario> Usuarios { get; set; } = null!;
+        public DbSet<UsuarioEndereco> UsuarioEndereco { get; set; } = null!;
         public DbSet<Produto> Produtos { get; set; } = null!;
+        public DbSet<Pedido> Pedido { get; set; } = null!;
+        public DbSet<PedidoItem> PedidoItem { get; set; } = null!;
     }
 }

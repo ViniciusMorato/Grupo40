@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -9,29 +8,29 @@ using System.Threading.Tasks;
 
 namespace Core.Business
 {
-    public class PedidoBusiness(IOrderService orderRepository) : IOrderService
+    public class PedidoItemBusiness(IOrderItensService orderItensService) : IOrderItensService
     {
-        public Pedido AddNewOrder(Pedido pedido)
+        public PedidoItem AddNewOrderItem(PedidoItem pedidoItem)
         {
             throw new NotImplementedException();
         }
 
-        public Pedido? GetOrderById(int id)
+        public PedidoItem AddNewOrderItens(List<PedidoItem> pedidoItem)
         {
             throw new NotImplementedException();
         }
 
-        public List<Pedido>? GetOrderByUsuario(int usuario)
-        {
-            return orderRepository.GetOrderByUsuario(usuario);
-        }
-
-        public Pedido UpdateOrder(Pedido pedido)
+        public PedidoItem GetOrderItemById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateOrderStatus(Pedido pedido)
+        public List<PedidoItem> GetOrderItensByOrder(int orderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PedidoItem UpdateOrderItem(PedidoItem pedidoItem)
         {
             throw new NotImplementedException();
         }

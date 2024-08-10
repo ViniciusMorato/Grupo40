@@ -26,6 +26,11 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
         return userRepository.GetUserByCpf(cpf);
     }
 
+    public Usuario? GetUserById(int id)
+    {
+        return userRepository.GetUserById(id);
+    }
+
     public IEnumerable<Usuario> GetUsers()
     {
         return userRepository.GetUsers();

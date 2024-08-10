@@ -40,14 +40,14 @@ namespace Adapter.Api.Controllers
                 user);
         }
 
-        [HttpGet("{cpf}")]
+        [HttpGet(Name="cpf")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult IdentificarCliente(string cpf)
         {
             var user = _userService.GetUserByCpf(cpf);
 
-            if (user != null) return NotFound();
+            if (user == null) return NotFound();
 
             UserDto userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);

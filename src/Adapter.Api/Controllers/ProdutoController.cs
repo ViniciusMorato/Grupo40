@@ -34,9 +34,11 @@ namespace Adapter.Api.Controllers
 
         [HttpGet("ListaProdutos")]
         [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
-        public IEnumerable<Produto> BuscarProdutos()
+        public IEnumerable<ProductDto> BuscarProdutos()
         {
-            return _productService.GetProducts();
+            IEnumerable<Produto> products = _productService.GetProducts();
+            IEnumerable<ProductDto> productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+            return productDtos;
         }
 
         [HttpPut( Name = "id")]

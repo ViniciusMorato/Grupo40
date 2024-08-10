@@ -22,6 +22,7 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
 
     public Usuario? GetUserByCpf(string cpf)
     {
+        cpf = cpf.Trim();
         return userRepository.GetUserByCpf(cpf);
     }
 

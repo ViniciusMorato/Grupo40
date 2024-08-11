@@ -17,21 +17,29 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Newtonsoft;
 using System.Text.Json.Serialization;
+using Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Registro dos Service
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddTransient<IOrderService, PedidoBusiness>();
 builder.Services.AddTransient<IOrderItensService, PedidoItemBusiness>();
+builder.Services.AddTransient<IOrderCredCardService, PedidoCartaoCreditoBusiness>();
+builder.Services.AddTransient<IOrderPixService, PedidoPixBusiness>();
 builder.Services.AddTransient<IUserService, UsuarioBusiness>();
+builder.Services.AddTransient<ICredCardService, CartaoCreditoBusiness>();
 builder.Services.AddTransient<IUserAddressService, UsuarioEnderecoBusiness>();
 builder.Services.AddTransient<IProductService, ProdutoBusiness>();
 
 // Registro dos repositórios
 builder.Services.AddTransient<IUserRepository, UsuarioDal>();
 builder.Services.AddTransient<IUserAddressRepository, UsuarioEnderecoDal>();
+builder.Services.AddTransient<ICredCardRepository, CartaoCreditoDal>();
 builder.Services.AddTransient<IOrderRepository, PedidoDal>();
 builder.Services.AddTransient<IOrderItensRepository, PedidoItemDal>();
+builder.Services.AddTransient<IOrderCredCardrepository, PedidoCartaoCreditoDal>();
+builder.Services.AddTransient<IOrderPixRepository, PedidoPixDal>();
 builder.Services.AddTransient<IProductRepository, ProdutoDal>();
 
 // Add services to the container.

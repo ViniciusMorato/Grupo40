@@ -5,86 +5,90 @@ using Core.Enums;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace Adapter.Api.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class PedidoController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUserService _userService;
-        private readonly IUserAddressService _userAddressService;
         private readonly IOrderService _orderService;
-        private readonly IOrderItensService _orderItensService;
-        private readonly IProductService _productService;
 
-        public PedidoController(IMapper mapper, IUserService userService, IOrderService orderService, IUserAddressService userAddressService, IProductService productService, IOrderItensService orderItensService)
+        public PedidoController(IMapper mapper, IOrderService orderService)
         {
             _mapper = mapper;
-            _userService = userService;
             _orderService = orderService;
-            _userAddressService = userAddressService;
-            _productService = productService;
-            _orderItensService = orderItensService;
         }
 
         [Authorize]
         [HttpGet("RetornarPedido")]
-        public IActionResult RetornarPedido(int pedido)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReturnPedidoDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IActionResult RetornarPedido(int pedidoId)
         {
-            return Ok();
+            try
+            {
+                Pedido pedido = _orderService.GetOrderById(pedidoId);
+
+                if (pedido == null)
+                {
+                    throw new ArgumentException("O um pedido não foi encontrado!");
+                }
+
+                return Ok(_mapper.Map<ReturnPedidoDto>(pedido));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize]
         [HttpGet("RetornarPedidosCliente")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReturnPedidoDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public IActionResult RetornarPedidosCliente(int cliente)
         {
-            return Ok();
+            try
+            {
+                List<Pedido> pedidos = _orderService.GetOrderByUsuario(cliente);
+
+                if(pedidos == null || pedidos.Count == 0)
+                {
+                    throw new ArgumentException("Nem um pedido foi encontrado!");
+                }
+
+                return Ok(_mapper.Map<List<ReturnPedidoDto>>(pedidos));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize]
         [HttpPost("RealizarPedido")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReturnPedidoDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public IActionResult RealizarPedido([FromBody] AddPedidoDTO pedido)
         {
-            Pedido pedidoEntity = _mapper.Map<Pedido>(pedido);
-            List<PedidoItem> ListaPedidoProdutoEntity = _mapper.Map<List<PedidoItem>>(pedido.Itens);
-
-            if (_userService.GetUserById(pedidoEntity.Id) == null)
+            try
             {
-                throw new ArgumentException("Usuario não encontrado!");
+                Pedido pedidoEntity = _mapper.Map<Pedido>(pedido);
+
+                pedidoEntity = _orderService.AddNewOrder(pedidoEntity);
+
+                return Ok(_mapper.Map<ReturnPedidoDto>(pedidoEntity));
             }
-    
-            if (_userAddressService.GetUserAddressByUserId(pedidoEntity.UsuarioEndereco) == null)
+            catch (Exception ex)
             {
-                throw new ArgumentException("Usuario não encontrado!");
+                return BadRequest(ex.Message);
             }
-
-            Produto? produto = new Produto();
-            foreach(PedidoItem pedidoItem in ListaPedidoProdutoEntity)
-            {
-                produto = _productService.GetProductById(pedidoItem.Id);
-
-                if (produto == null)
-                {
-                    throw new ArgumentException(String.Format("Produto {0} não encontrato", pedidoItem.Id));
-                }
-
-                pedidoItem.PrecoUnitario = produto.Preco;
-            }
-
-            pedidoEntity.DataPedido = DateTime.Now;
-            pedidoEntity.StatusPedido = StatusPedido.Pendente;
-            pedidoEntity.ValorTotal = ListaPedidoProdutoEntity.Sum(pp => pp.PrecoUnitario * pp.Quantidade);
-            pedidoEntity.QuantidadeProdutos = ListaPedidoProdutoEntity.Sum(pp => pp.Quantidade);
-
-            pedidoEntity = _orderService.AddNewOrder(pedidoEntity);
-            ListaPedidoProdutoEntity.ForEach(pp => pp.IdPedido = pedidoEntity.Id);
-            _orderItensService.AddNewOrderItens(ListaPedidoProdutoEntity);
-
-            return Ok();
         }
 
         [Authorize]
@@ -96,9 +100,25 @@ namespace Adapter.Api.Controllers
 
         [Authorize]
         [HttpPatch("AlterarStatusPedido")]
-        public IActionResult AlterarStatusPedido()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReturnPedidoDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IActionResult AlterarStatusPedido([Required]int pedidoId, [Required]EnumStatusPedido statusPedido)
         {
-            return Ok();
+            try
+            {
+                Pedido pedido = _orderService.UpdateOrderStatus(pedidoId, statusPedido);
+
+                if (pedido == null)
+                {
+                    throw new ArgumentException("O um pedido não foi encontrado!");
+                }
+
+                return Ok(_mapper.Map<ReturnPedidoDto>(pedido));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

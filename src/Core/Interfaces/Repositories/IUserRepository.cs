@@ -4,11 +4,11 @@ namespace Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<Usuario> GetUsers();
+        List<Usuario> GetUsers();
         Usuario? GetUserByCpf(string cpf);
+        Usuario? GetUserByEmailSenha(string email, string senha);
         Usuario? GetUserById(int id);
-        Usuario InsertUser(Usuario user);
-        void UpdateUser(Usuario user);
+        Usuario InsertUpdateUser(Usuario user);
         void DeleteUserById(Usuario user);
     }
 }

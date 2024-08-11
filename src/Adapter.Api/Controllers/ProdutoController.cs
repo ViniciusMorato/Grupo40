@@ -8,6 +8,8 @@ namespace Adapter.Api.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ProdutoController : ControllerBase
     {
@@ -21,61 +23,93 @@ namespace Adapter.Api.Controllers
         }
 
         [HttpPost("CriarProduto")]
-        [ProducesResponseType(typeof(AddUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CriarProduto([FromBody] AddProductDto productDto)
         {
-            Produto productEntity = _mapper.Map<Produto>(productDto);
-            _productService.AddNewProduct(productEntity);
+            try
+            {
+                Produto productEntity = _mapper.Map<Produto>(productDto);
+                productEntity = _productService.AddNewProduct(productEntity);
 
-            return CreatedAtAction(nameof(BuscarProduto),
-                new { x = productEntity.Id }, productEntity);
+                return Ok(_mapper.Map<ReturnProductDto>(productEntity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet("ListaProdutos")]
-        [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
-        public IEnumerable<ProductDto> BuscarProdutos()
+        [HttpGet("BuscarProdutos")]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult BuscarProdutos()
         {
-            IEnumerable<Produto> products = _productService.GetProducts();
-            IEnumerable<ProductDto> productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
-            return productDtos;
+            try
+            {
+                List<Produto> products = _productService.GetProducts();
+                return Ok(_mapper.Map<List<ProductDto>>(products));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut( Name = "id")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPut( Name = "EditarProduto")]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult EditarProduto(int id, [FromBody] UpdateProductDto productDto)
         {
-            var product = _productService.GetProductById(id);
-            if (product == null) return NotFound();
-            _mapper.Map(productDto, product);
-            _productService.UpdateProduct(product);
-            return NoContent();
+            try
+            {
+                var product = _productService.GetProductById(id);
+                if (product == null) return NotFound();
+                _mapper.Map(productDto, product);
+                product = _productService.UpdateProduct(product);
+                return Ok(_mapper.Map<ProductDto>(product));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-
-        [HttpDelete(Name = "id")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpDelete(Name = "RemoverProduto")]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult RemoverProduto(int id)
         {
-            var product = _productService.GetProductById(id);
-            if (product == null) return NotFound();
-            _productService.DeleteProduct(product);
-            return NoContent();
+            try
+            {
+                var product = _productService.GetProductById(id);
+                if (product == null) return NotFound();
+                _productService.DeleteProduct(product);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet(Name = "id")]
-        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet(Name = "BuscarProduto")]
+        [ProducesResponseType(typeof(ReturnProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult BuscarProduto(int id)
         {
-            var product = _productService.GetProductById(id);
+            try
+            {
+                var product = _productService.GetProductById(id);
 
-            if (product == null) return NotFound();
+                if (product == null) return NotFound();
 
-            ProductDto productDto = _mapper.Map<ProductDto>(product);
-            return Ok(productDto);
+                return Ok(_mapper.Map<ProductDto>(product));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

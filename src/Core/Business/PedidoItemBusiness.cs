@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Core.Business
 {
-    public class PedidoItemBusiness(IOrderItensService orderItensService) : IOrderItensService
+    public class PedidoItemBusiness(IOrderItensRepository OrderItensRepository) : IOrderItensService
     {
+
         public PedidoItem AddNewOrderItem(PedidoItem pedidoItem)
         {
             throw new NotImplementedException();

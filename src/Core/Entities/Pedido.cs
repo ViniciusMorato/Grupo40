@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Entities
 {
+    [Table("Pedido")]
     public sealed class Pedido
     {
         [Key]
@@ -35,19 +37,21 @@ namespace Core.Entities
 
         [Required]
         [MaxLength(30)]
-        public StatusPedido StatusPedido { get; set; }
+        public EnumStatusPedido StatusPedido { get; set; }
 
         [Required]
         [MaxLength(30)]
-        public FormaPagamento FormaPagamento { get; set; }
+        public EnumFormaPagamento FormaPagamento { get; set; }
+
+        public List<PedidoItem>? PedidoItens { get; set; } = new List<PedidoItem>();
 
         public void Validade()
         {
-            if (!Enum.IsDefined(typeof(FormaPagamento), this.FormaPagamento))
+            if (!Enum.IsDefined(typeof(EnumFormaPagamento), this.FormaPagamento))
             {
                 throw new ArgumentException("Forma Pagamento não pode ser vazio");
             }
-            if (!Enum.IsDefined(typeof(StatusPedido), this.StatusPedido))
+            if (!Enum.IsDefined(typeof(EnumStatusPedido), this.StatusPedido))
             {
                 throw new ArgumentException("Status Pedido Pagamento não pode ser vazio");
             }

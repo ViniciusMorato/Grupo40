@@ -1,9 +1,19 @@
-﻿namespace Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities
 {
     public sealed class ItemPedido
     {
-        public Pedido Pedido { get; set; }
-        public Produto Produto { get; set; }
-        public int quantidade { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public int IdPedido { get; set; }
+        [Required]
+        public int IdProduto { get; set; }
+        [Required]
+        public int Quantidade { get; set; }
+        [Required]
+        public decimal ValorUnitario { get; set; }
+        public string Observacao { get; set; }
     }
 }

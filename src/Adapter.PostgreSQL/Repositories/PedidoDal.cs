@@ -27,7 +27,10 @@ namespace Adapter.PostgreSQL.Repositories
         {
             try
             {
-                _context.Pedido.Add(order);
+                if(order.Id == 0)
+                {
+                    _context.Pedido.Add(order);
+                }
                 _context.SaveChanges();
 
                 return order;

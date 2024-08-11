@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Interfaces.Repositories;
 
 namespace Core.Business
 {
-    public class UsuarioEnderecoBusiness(IUserAddressService userAddressService) : IUserAddressService
+    public class UsuarioEnderecoBusiness(IUserAddressRepository userAddressRepository) : IUserAddressService
     {
         public UsuarioEnderecoBusiness AddNewUserAddress(UsuarioEnderecoBusiness usuarioEndereco)
         {
@@ -17,7 +18,17 @@ namespace Core.Business
 
         public UsuarioEndereco AddNewUserAddress(UsuarioEndereco usuarioEndereco)
         {
-            throw new NotImplementedException();
+            if (userAddressRepository.CheckAddressExists(usuarioEndereco))
+                throw new ArgumentException("");
+
+            userAddressRepository.InsertUpdateUserAddress(usuarioEndereco);
+
+            return usuarioEndereco;
+        }
+
+        public bool CheckAddressExists(UsuarioEndereco usuarioEndereco)
+        {
+            return userAddressRepository.CheckAddressExists(usuarioEndereco);
         }
 
         public void DeleteUserAddress(int id)
@@ -32,7 +43,7 @@ namespace Core.Business
 
         public List<UsuarioEndereco> GetUserAddressByUserId(int idUsuario)
         {
-            throw new NotImplementedException();
+            return userAddressRepository.GetUserAddressByUser(idUsuario).ToList();
         }
 
         public void UpdateUserAddress(UsuarioEndereco usuarioEndereco)

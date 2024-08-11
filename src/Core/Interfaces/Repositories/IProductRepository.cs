@@ -4,9 +4,8 @@ namespace Core.Interfaces.Repositories;
 
 public interface IProductRepository
 {
-    Produto InsertProduct(Produto product);
+    Produto InsertUpdateProduct(Produto product);
     Produto? GetProductById(int id);
-    IEnumerable<Produto> GetProducts();
-    Produto UpdateProduct(Produto product);
+    List<Produto> GetProducts();
     void DeleteProduct(Produto product);
 }

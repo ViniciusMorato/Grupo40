@@ -15,7 +15,7 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
             return user;
         }
 
-        Usuario addNewUser = userRepository.InsertUser(usuario);
+        Usuario addNewUser = userRepository.InsertUpdateUser(usuario);
       
         return addNewUser;
     }
@@ -26,12 +26,17 @@ public class UsuarioBusiness(IUserRepository userRepository) : IUserService
         return userRepository.GetUserByCpf(cpf);
     }
 
+    public Usuario? GetUserByEmailSenha(string email, string senha)
+    {
+        return userRepository.GetUserByEmailSenha(email, senha);
+    }
+
     public Usuario? GetUserById(int id)
     {
         return userRepository.GetUserById(id);
     }
 
-    public IEnumerable<Usuario> GetUsers()
+    public List<Usuario> GetUsers()
     {
         return userRepository.GetUsers();
     }

@@ -2,29 +2,41 @@
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adapter.Api.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ClienteController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly IUserAddressService _userAddressService;
 
-        public ClienteController(IMapper mapper, IUserService userService)
+        public ClienteController(IMapper mapper, IUserService userService, IUserAddressService userAddressService)
         {
             _mapper = mapper;
             _userService = userService;
+            _userAddressService = userAddressService;
         }
 
         [HttpGet("Clientes")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
-        public IEnumerable<Usuario> BuscaUsuarios()
+        public IActionResult BuscaUsuarios()
         {
-            return _userService.GetUsers();
+            try
+            {
+                return Ok(_userService.GetUsers());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("CadastrarCliente")]
@@ -32,25 +44,74 @@ namespace Adapter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CadastrarCliente([FromBody] AddUserDto userDto)
         {
-            Usuario userEntity = _mapper.Map<Usuario>(userDto);
-            _userService.AddNewUser(userEntity);
+            try
+            {
+                Usuario userEntity = _mapper.Map<Usuario>(userDto);
+                userEntity = _userService.AddNewUser(userEntity);
 
-            return CreatedAtAction(nameof(IdentificarCliente),
-                new { cpf = userEntity.Cpf },
-                userEntity);
+                return Ok(_mapper.Map<UserDto>(userEntity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet(Name = "cpf")]
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult IdentificarCliente(string cpf)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult IdentificarCliente([FromQuery]string cpf)
         {
-            var user = _userService.GetUserByCpf(cpf);
+            try
+            {
+                Usuario? user = _userService.GetUserByCpf(cpf);
 
-            if (user == null) return NotFound();
+                if (user == null) 
+                    return NotFound();
 
-            UserDto userDto = _mapper.Map<UserDto>(user);
-            return Ok(userDto);
+                return Ok(_mapper.Map<UserDto>(user));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("CadastrarEndereco")]
+        public IActionResult CadastrarEndereco([FromBody]AddPessoaEnderecoDto pessoaEnderecoDto)
+        {
+            try
+            {
+                UsuarioEndereco usuarioEnderecoEntity = _mapper.Map<UsuarioEndereco>(pessoaEnderecoDto);
+
+                usuarioEnderecoEntity = _userAddressService.AddNewUserAddress(usuarioEnderecoEntity);
+
+                return Ok(_mapper.Map<ReturnPessoaEnderecoDto>(usuarioEnderecoEntity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("RetornarEnderecosCliente")]
+        [ProducesResponseType(typeof(List<ReturnPessoaEnderecoDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult RetornarEnderecosCliente([FromQuery]int cliente)
+        {
+            try
+            {
+                List<UsuarioEndereco> usuarioEnderecoEntity = _userAddressService.GetUserAddressByUserId(cliente);
+
+                return Ok(_mapper.Map<List<ReturnPessoaEnderecoDto>>(usuarioEnderecoEntity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

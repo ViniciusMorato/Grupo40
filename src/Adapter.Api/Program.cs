@@ -10,15 +10,30 @@ using Adapter.PostgreSQL;
 using Core.Business;
 using Core.Interfaces.Authentication;
 using Core.Interfaces.Services;
+using System;
+using Core.Interfaces.Repositories;
+using Adapter.PostgreSQL.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using Newtonsoft;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddScoped<IUserService, UsuarioBusiness>();
-builder.Services.AddScoped<IUserAddressService, UsuarioEnderecoBusiness>();
-builder.Services.AddScoped<IProductService, ProdutoBusiness>();
-builder.Services.AddScoped<IOrderService, PedidoBusiness>();
-builder.Services.AddScoped<IOrderItensService, PedidoItemBusiness>();
+builder.Services.AddTransient<IOrderService, PedidoBusiness>();
+builder.Services.AddTransient<IOrderItensService, PedidoItemBusiness>();
+builder.Services.AddTransient<IUserService, UsuarioBusiness>();
+builder.Services.AddTransient<IUserAddressService, UsuarioEnderecoBusiness>();
+builder.Services.AddTransient<IProductService, ProdutoBusiness>();
+
+// Registro dos repositórios
+builder.Services.AddTransient<IUserRepository, UsuarioDal>();
+builder.Services.AddTransient<IUserAddressRepository, UsuarioEnderecoDal>();
+builder.Services.AddTransient<IOrderRepository, PedidoDal>();
+builder.Services.AddTransient<IOrderItensRepository, PedidoItemDal>();
+builder.Services.AddTransient<IProductRepository, ProdutoDal>();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOptions();
@@ -71,8 +86,11 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
-});
 
+    // Exibir os valores e nomes dos enums
+    c.UseInlineDefinitionsForEnums(); // Exibe os enums como strings
+    c.UseAllOfToExtendReferenceSchemas(); // Para detalhar os valores
+});
 
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 builder.Services.AddCors();
@@ -96,7 +114,7 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

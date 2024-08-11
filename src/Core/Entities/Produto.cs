@@ -11,7 +11,6 @@ namespace Core.Entities
         [Required] public int Estoque { get; private set; }
         [Required] public Category Categoria { get; private set; }
 
-
         public void Validade()
         {
             ValidadeDescricao();

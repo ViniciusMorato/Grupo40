@@ -13,7 +13,10 @@ namespace Core.Entities
         public int Id { get; private set; }
 
         [Required]
-        public int Cliente {  get; set; }
+        public int UsuarioId { get; set; }
+
+        [Required]
+        public Usuario Usuario { get; set; }
 
         [Required]
         public string Rua { get; set; }

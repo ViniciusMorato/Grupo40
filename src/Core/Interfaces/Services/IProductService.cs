@@ -6,7 +6,7 @@ public interface IProductService
 {
     Produto AddNewProduct(Produto product);
     Produto? GetProductById(int id);
-    IEnumerable<Produto> GetProducts();
+    List<Produto> GetProducts();
     Produto? UpdateProduct(Produto product);
     void DeleteProduct(Produto product);
 }

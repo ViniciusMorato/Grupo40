@@ -1,4 +1,6 @@
 ﻿using Core.Entities;
+using Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Interfaces.Services
 {
@@ -8,6 +10,6 @@ namespace Core.Interfaces.Services
         Pedido UpdateOrder(Pedido pedido);
         Pedido? GetOrderById(int id);
         List<Pedido>? GetOrderByUsuario(int usuario);
-        void UpdateOrderStatus(Pedido pedido);
+        Pedido UpdateOrderStatus(int pedido, EnumStatusPedido statusPedido);
     }
 }

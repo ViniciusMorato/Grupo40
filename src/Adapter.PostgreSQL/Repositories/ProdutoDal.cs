@@ -13,9 +13,12 @@ public class ProdutoDal : IProductRepository
         _context = context;
     }
 
-    public Produto InsertProduct(Produto product)
+    public Produto InsertUpdateProduct(Produto product)
     {
-        _context.Produtos.Add(product);
+        if(product.Id == 0)
+        {
+            _context.Produtos.Add(product);
+        }
         _context.SaveChanges();
         return product;
     }
@@ -25,15 +28,9 @@ public class ProdutoDal : IProductRepository
         return _context.Produtos.FirstOrDefault(product => product.Id == id);
     }
 
-    public IEnumerable<Produto> GetProducts()
+    public List<Produto> GetProducts()
     {
-        return _context.Produtos;
-    }
-
-    public Produto UpdateProduct(Produto product)
-    {
-        _context.SaveChanges();
-        return product;
+        return _context.Produtos.ToList();
     }
 
     public void DeleteProduct(Produto product)

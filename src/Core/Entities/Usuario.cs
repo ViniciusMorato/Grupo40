@@ -22,6 +22,7 @@ namespace Core.Entities
         [Required] public string Email { get; private set; }
 
         [Required] public AccessControl Papel { get; private set; }
+        public List<UsuarioEndereco>? UsuarioEnderecos { get; set; } = new List<UsuarioEndereco>();
 
         public void Validade()
         {

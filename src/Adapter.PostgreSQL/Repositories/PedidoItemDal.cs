@@ -1,4 +1,5 @@
 ﻿using Adapter.PostgreSQL.Context;
+using Core.Entities;
 using Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,18 @@ namespace Adapter.PostgreSQL.Repositories
         public PedidoItemDal(PostgreSqlContext context)
         {
             _context = context;
+        }
+
+        public List<PedidoItem>? GetOrderItensByPedido(int pedido)
+        {
+            return _context.PedidoItem.Where(pi => pi.PedidoId == pedido).ToList();
+        }
+
+        public List<PedidoItem> InsertRangeOrderItem(List<PedidoItem> orderItens)
+        {
+            _context.PedidoItem.AddRange(orderItens);
+            _context.SaveChanges();
+            return orderItens;
         }
     }
 }

@@ -14,5 +14,6 @@ namespace Core.Interfaces.Services
         List<UsuarioEndereco> GetUserAddressByUserId(int idUsuario);
         void UpdateUserAddress(UsuarioEndereco usuarioEndereco);
         void DeleteUserAddress(int id);
+        public bool CheckAddressExists(UsuarioEndereco usuarioEndereco);
     }
 }

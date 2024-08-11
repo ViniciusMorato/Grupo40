@@ -6,5 +6,7 @@ public interface IUserService
 {
     Usuario AddNewUser(Usuario usuario);
     Usuario? GetUserByCpf(string cpf);
-    IEnumerable<Usuario> GetUsers();
+    Usuario? GetUserByEmailSenha(string email, string senha);
+    Usuario? GetUserById(int id);
+    List<Usuario> GetUsers();
 }

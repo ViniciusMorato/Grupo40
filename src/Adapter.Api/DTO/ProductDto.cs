@@ -1,4 +1,5 @@
 ﻿using Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Adapter.Api.DTO;
@@ -23,4 +24,13 @@ public class ProductDto
         Estoque = estoque;
         Categoria = categoria.ToString();
     }
+}
+
+public class ReturnProductDto
+{
+    public int Id { get; private set; }
+    public string Descricao { get; private set; }
+    public decimal Preco { get; private set; }
+    public int Estoque { get; private set; }
+    public Category Categoria { get; private set; }
 }

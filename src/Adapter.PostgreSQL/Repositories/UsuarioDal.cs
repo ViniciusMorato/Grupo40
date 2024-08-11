@@ -13,10 +13,9 @@ public class UsuarioDal : IUserRepository
         _context = context;
     }
 
-
-    public IEnumerable<Usuario> GetUsers()
+    public List<Usuario> GetUsers()
     {
-        return _context.Usuarios;
+        return _context.Usuarios.ToList();
     }
 
     public Usuario? GetUserByCpf(string cpf)
@@ -24,20 +23,28 @@ public class UsuarioDal : IUserRepository
         return _context.Usuarios.FirstOrDefault(user => user.Cpf == cpf);
     }
 
-    public Usuario InsertUser(Usuario user)
+    public Usuario InsertUpdateUser(Usuario user)
     {
-        _context.Usuarios.Add(user);
+        if(user.Id == 0)
+        {
+            _context.Usuarios.Add(user);
+        }
         _context.SaveChanges();
         return user;
     }
 
-    public void UpdateUser(Usuario user)
-    {
-        throw new NotImplementedException();
-    }
-
     public void DeleteUserById(Usuario user)
     {
-        throw new NotImplementedException();
+        _context.Usuarios.Remove(user);
+    }
+
+    public Usuario? GetUserById(int id)
+    {
+        return _context.Usuarios.FirstOrDefault(user => user.Id == id);
+    }
+
+    public Usuario? GetUserByEmailSenha(string email, string senha)
+    {
+        return _context.Usuarios.FirstOrDefault(u => u.Email == email && u.Senha == senha);
     }
 }

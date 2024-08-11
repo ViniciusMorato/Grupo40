@@ -15,7 +15,7 @@ public class ProdutoBusiness(IProductRepository productRepository) : IProductSer
             return productExist;
         }
 
-        Produto newProduct = productRepository.InsertProduct(product);
+        Produto newProduct = productRepository.InsertUpdateProduct(product);
         return newProduct;
     }
 
@@ -24,7 +24,7 @@ public class ProdutoBusiness(IProductRepository productRepository) : IProductSer
         return productRepository.GetProductById(id);
     }
 
-    public IEnumerable<Produto> GetProducts()
+    public List<Produto> GetProducts()
     {
         return productRepository.GetProducts();
     }
@@ -35,7 +35,7 @@ public class ProdutoBusiness(IProductRepository productRepository) : IProductSer
         var productExist = GetProductById(product.Id);
         if (productExist != null)
         {
-            return productRepository.UpdateProduct(product);
+            return productRepository.InsertUpdateProduct(product);
         }
 
         return null;

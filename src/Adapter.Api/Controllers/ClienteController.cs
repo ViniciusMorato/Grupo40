@@ -61,13 +61,13 @@ namespace Adapter.Api.Controllers
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult IdentificarCliente([FromQuery]string cpf)
+        public IActionResult IdentificarCliente([FromQuery] string cpf)
         {
             try
             {
                 Usuario? user = _userService.GetUserByCpf(cpf);
 
-                if (user == null) 
+                if (user == null)
                     return NotFound();
 
                 return Ok(_mapper.Map<UserDto>(user));
@@ -80,7 +80,7 @@ namespace Adapter.Api.Controllers
 
         [Authorize]
         [HttpPost("CadastrarEndereco")]
-        public IActionResult CadastrarEndereco([FromBody]AddPessoaEnderecoDto pessoaEnderecoDto)
+        public IActionResult CadastrarEndereco([FromBody] AddPessoaEnderecoDto pessoaEnderecoDto)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Adapter.Api.Controllers
         [HttpGet("RetornarEnderecosCliente")]
         [ProducesResponseType(typeof(List<ReturnPessoaEnderecoDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult RetornarEnderecosCliente([FromQuery]int cliente)
+        public IActionResult RetornarEnderecosCliente([FromQuery] int cliente)
         {
             try
             {
@@ -112,6 +112,16 @@ namespace Adapter.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        public IActionResult CadastrarCartaoCredito()
+        {
+            return Ok();
+        }
+
+        public IActionResult RemoverCartaoCredito()
+        {
+            return Ok();
         }
     }
 }

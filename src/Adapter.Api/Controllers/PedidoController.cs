@@ -120,5 +120,15 @@ namespace Adapter.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        public IActionResult PagarPorCartaoCredito()
+        {
+            return Ok();
+        }
+
+        public IActionResult PagarPorPix()
+        {
+            return Ok();
+        }
     }
 }

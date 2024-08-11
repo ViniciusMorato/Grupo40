@@ -3,6 +3,7 @@ using System;
 using Adapter.PostgreSQL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Adapter.PostgreSQL.Migrations
 {
     [DbContext(typeof(PostgreSqlContext))]
-    partial class PostgreSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240811192651_Insert")]
+    partial class Insert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,16 +69,14 @@ namespace Adapter.PostgreSQL.Migrations
             modelBuilder.Entity("Core.Entities.Dominio", b =>
                 {
                     b.Property<string>("Chave")
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
+                        .HasColumnType("text");
 
                     b.Property<int>("DominioId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Chave", "DominioId");
 
@@ -174,29 +175,6 @@ namespace Adapter.PostgreSQL.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("PedidoItem");
-                });
-
-            modelBuilder.Entity("Core.Entities.PedidoPix", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CodigoPix")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PedidoId");
-
-                    b.ToTable("PedidoPix");
                 });
 
             modelBuilder.Entity("Core.Entities.Produto", b =>
@@ -346,17 +324,6 @@ namespace Adapter.PostgreSQL.Migrations
                     b.Navigation("Pedido");
 
                     b.Navigation("Produto");
-                });
-
-            modelBuilder.Entity("Core.Entities.PedidoPix", b =>
-                {
-                    b.HasOne("Core.Entities.Pedido", "Pedido")
-                        .WithMany()
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("Core.Entities.UsuarioEndereco", b =>

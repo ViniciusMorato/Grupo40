@@ -23,6 +23,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Registro dos Service
 builder.Services.AddPersistence(builder.Configuration);
+
+using (var scope = builder.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<PostgreSqlContext>();
+    dbContext.Database.Migrate();
+}
+
+
 builder.Services.AddTransient<IOrderService, PedidoBusiness>();
 builder.Services.AddTransient<IOrderItensService, PedidoItemBusiness>();
 builder.Services.AddTransient<IOrderCredCardService, PedidoCartaoCreditoBusiness>();

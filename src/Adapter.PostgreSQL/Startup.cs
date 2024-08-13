@@ -17,6 +17,13 @@ public static class Startup
 
         services.AddScoped<IUserRepository, UsuarioDal>();
         services.AddScoped<IProductRepository, ProdutoDal>();
+
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            var dbContext = serviceProvider.GetRequiredService<PostgreSqlContext>();
+            dbContext.MigrateDatabase();
+        }
+        
         return services;
     }
 }

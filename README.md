@@ -14,7 +14,6 @@ O objetivo do desenvolvimento é apoiar uma lanchonete de bairro em rápida expa
 - [Requisitos](#requisitos)
 - [Estrutura](#estrutura)
 - [Executando](#executando)
-- [Endpoints](#endpoints)
 
 
 ## Propósito

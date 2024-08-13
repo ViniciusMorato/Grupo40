@@ -33,6 +33,8 @@ Os principais princípios seguidos no desenvolvimento desta aplicação incluem:
 
 ## Documentações
 
+https://miro.com/app/board/uXjVKzFU2VA=/
+
 1. **Sessão de Brainstorming**
 
 ![Brainstorming](docs/Brainstorming.jpg)  

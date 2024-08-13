@@ -36,4 +36,4 @@ WORKDIR /app
 
 COPY --from=publish /app/publish .
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["dotnet", "Adapter.Api.dll"]

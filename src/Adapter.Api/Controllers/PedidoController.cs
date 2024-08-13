@@ -18,11 +18,13 @@ namespace Adapter.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IOrderService _orderService;
+        private readonly IOrderCredCardService _orderCredCardService;
 
-        public PedidoController(IMapper mapper, IOrderService orderService)
+        public PedidoController(IMapper mapper, IOrderService orderService, IOrderCredCardService orderCredCardService)
         {
             _mapper = mapper;
             _orderService = orderService;
+            _orderCredCardService = orderCredCardService;
         }
 
         [Authorize]
@@ -121,8 +123,9 @@ namespace Adapter.Api.Controllers
             }
         }
 
-        public IActionResult PagarPorCartaoCredito()
+        public IActionResult PagarPorCartaoCredito([FromQuery]int pedidoId, [FromQuery]int clienteCartaoCreditoId)
         {
+            _orderCredCardService.AddNewOrderCredCard(pedidoId, clienteCartaoCreditoId);
             return Ok();
         }
 

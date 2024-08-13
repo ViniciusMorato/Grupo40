@@ -55,7 +55,7 @@ namespace Core.Business
 
             pedido.DataPedido = DateTime.UtcNow;
             pedido.StatusPedido = EnumStatusPedido.Pendente;
-            pedido.ValorTotal = pedido.PedidoItens.Sum(pp => pp.PrecoUnitario * pp.Quantidade);
+            pedido.ValorTotal = pedido.PedidoItens.Sum(pp => pp.PrecoUnitario * pp.Quantidade) + pedido.ValorEntrega;
             pedido.QuantidadeProdutos = pedido.PedidoItens.Sum(pp => pp.Quantidade);
 
             pedido = _orderRepository.InsertUpdateOrder(pedido);

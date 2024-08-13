@@ -76,4 +76,19 @@ namespace Adapter.Api.DTO
 
         public string? Observacao { get; set; }
     }
+
+    public class ClienteCartaoCreditoDto
+    {
+        public int PessoaId { get; set; }
+
+        public EnumTipoCartao TipoCartao { get; set; }
+
+        public string NomeNoCartao { get; set; }
+
+        public string Numero { get; set; }
+
+        public string Vencimento { get; set; }
+
+        public string CVV { get; set; }
+    }
 }

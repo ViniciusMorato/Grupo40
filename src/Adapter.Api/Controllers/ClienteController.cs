@@ -17,12 +17,14 @@ namespace Adapter.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly IUserAddressService _userAddressService;
+        private readonly ICredCardService _credCardService;
 
-        public ClienteController(IMapper mapper, IUserService userService, IUserAddressService userAddressService)
+        public ClienteController(IMapper mapper, IUserService userService, IUserAddressService userAddressService, ICredCardService credCardService)
         {
             _mapper = mapper;
             _userService = userService;
             _userAddressService = userAddressService;
+            _credCardService = credCardService;
         }
 
         [HttpGet("Clientes")]
@@ -114,14 +116,37 @@ namespace Adapter.Api.Controllers
             }
         }
 
-        public IActionResult CadastrarCartaoCredito()
+        [Authorize]
+        [HttpPost("CadastrarCartaoCredito")]
+        [ProducesResponseType(typeof(ClienteCartaoCreditoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CadastrarCartaoCredito([FromBody] ClienteCartaoCreditoDto clienteCartaoCredito)
         {
-            return Ok();
+            try
+            {
+                CartaoCredito cartaoCredito = _mapper.Map<CartaoCredito>(clienteCartaoCredito);
+
+                _credCardService.AddNewCredCard(cartaoCredito);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        public IActionResult RemoverCartaoCredito()
+        public IActionResult RemoverCartaoCredito([FromQuery] int cartaoCreditoId)
         {
-            return Ok();
+            try
+            {
+                _credCardService.DeleteCredCard(cartaoCreditoId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

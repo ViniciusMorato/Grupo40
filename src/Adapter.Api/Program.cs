@@ -23,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Registro dos Service
 builder.Services.AddPersistence(builder.Configuration);
+
 builder.Services.AddTransient<IOrderService, PedidoBusiness>();
 builder.Services.AddTransient<IOrderItensService, PedidoItemBusiness>();
 builder.Services.AddTransient<IOrderCredCardService, PedidoCartaoCreditoBusiness>();

@@ -32,5 +32,10 @@ namespace Adapter.PostgreSQL.Context
         public DbSet<Produto> Produtos { get; set; } = null!;
         public DbSet<Pedido> Pedido { get; set; } = null!;
         public DbSet<PedidoItem> PedidoItem { get; set; } = null!;
+
+        public void MigrateDatabase()
+        {
+            this.Database.Migrate();
+        }
     }
 }

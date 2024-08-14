@@ -18,6 +18,11 @@ namespace Adapter.PostgreSQL.Repositories
             _context = context;
         }
 
+        public bool CheckProducIsUsedByOrder(int produto)
+        {
+            return _context.PedidoItem.FirstOrDefault(pi => pi.ProdutoId == produto) != null;
+        }
+
         public List<PedidoItem>? GetOrderItensByPedido(int pedido)
         {
             return _context.PedidoItem.Where(pi => pi.PedidoId == pedido).ToList();

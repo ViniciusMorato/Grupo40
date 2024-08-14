@@ -14,18 +14,18 @@ namespace Core.Business
     public class PedidoBusiness : IOrderService
     {
         private readonly IUserService _userService;
-        private readonly IUserAddressService _userAddressService;
-        private readonly IProductService _productService;
+        private readonly IUserAddressRepository _userAddressRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItensRepository _orderItensRepository;
 
-        public PedidoBusiness(IUserService userService, IUserAddressService userAddressService, IProductService productService, IOrderRepository orderRepository, IOrderItensRepository orderItensRepository)
+        public PedidoBusiness(IUserService userService, IUserAddressRepository userAddressRepository, IOrderRepository orderRepository, IOrderItensRepository orderItensRepository, IProductRepository productRepository)
         {
             _userService = userService;
-            _userAddressService = userAddressService;
-            _productService = productService;
+            _userAddressRepository = userAddressRepository;
             _orderRepository = orderRepository;
             _orderItensRepository = orderItensRepository;
+            _productRepository = productRepository;
         }
 
         public Pedido AddNewOrder(Pedido pedido)
@@ -35,32 +35,48 @@ namespace Core.Business
                 throw new ArgumentException("Usuario não encontrado!");
             }
 
-            if (_userAddressService.GetUserAddressByUserId(pedido.UsuarioEndereco) == null)
+            if (_userAddressRepository.GetUserAddressByUser(pedido.UsuarioEndereco) == null)
             {
                 throw new ArgumentException("Usuario não encontrado!");
             }
 
-            Produto? produto = new Produto();
-            foreach (PedidoItem pedidoItem in pedido.PedidoItens)
+            if(pedido.FormaPagamento == EnumFormaPagamento.Dinheiro || pedido.FormaPagamento == EnumFormaPagamento.Pix || pedido.FormaPagamento == EnumFormaPagamento.CartaoCredito || pedido.FormaPagamento == EnumFormaPagamento.CartaoDebito)
             {
-                produto = _productService.GetProductById(pedidoItem.ProdutoId);
-
-                if (produto == null)
+                Produto? produto = new Produto();
+                foreach (PedidoItem pedidoItem in pedido.PedidoItens)
                 {
-                    throw new ArgumentException(String.Format("Produto {0} não encontrado", pedidoItem.ProdutoId));
+                    produto = _productRepository.GetProductById(pedidoItem.ProdutoId);
+
+                    if (produto == null)
+                    {
+                        throw new ArgumentException(String.Format("Produto {0} não encontrado", pedidoItem.ProdutoId));
+                    }
+
+                    if(produto.Estoque - pedidoItem.Quantidade < 0)
+                    {
+                        throw new ArgumentException("Produto sem estoque");
+                    }
+
+                    produto.Estoque -= pedidoItem.Quantidade;
+
+                    _productRepository.InsertUpdateProduct(produto);
+
+                    pedidoItem.PrecoUnitario = produto.Preco;
                 }
 
-                pedidoItem.PrecoUnitario = produto.Preco;
+                pedido.DataPedido = DateTime.UtcNow;
+                pedido.StatusPedido = EnumStatusPedido.Pendente;
+                pedido.ValorTotal = pedido.PedidoItens.Sum(pp => pp.PrecoUnitario * pp.Quantidade) + pedido.ValorEntrega;
+                pedido.QuantidadeProdutos = pedido.PedidoItens.Sum(pp => pp.Quantidade);
+
+                pedido = _orderRepository.InsertUpdateOrder(pedido);
+
+                return pedido;
             }
-
-            pedido.DataPedido = DateTime.UtcNow;
-            pedido.StatusPedido = EnumStatusPedido.Pendente;
-            pedido.ValorTotal = pedido.PedidoItens.Sum(pp => pp.PrecoUnitario * pp.Quantidade);
-            pedido.QuantidadeProdutos = pedido.PedidoItens.Sum(pp => pp.Quantidade);
-
-            pedido = _orderRepository.InsertUpdateOrder(pedido);
-
-            return pedido;
+            else
+            {
+                throw new ArgumentException("Forma de pagamento não é valida!");
+            }
         }
 
         public Pedido? GetOrderById(int id)
@@ -88,7 +104,20 @@ namespace Core.Business
         {
             Pedido? pedido = this.GetOrderById(pedidoId);
             if(pedido == null) {
-                throw new ArgumentException("");
+                throw new ArgumentException("Pedido não encontrado");
+            }
+
+            if(pedido.StatusPedido == statusPedido)
+            {
+                throw new ArgumentException("Pedido já tem esse status");
+            }
+
+            if((statusPedido == EnumStatusPedido.Cancelado && pedido.StatusPedido == EnumStatusPedido.Processando)
+                || (statusPedido == EnumStatusPedido.Processando && (pedido.StatusPedido == EnumStatusPedido.Cancelado || pedido.StatusPedido == EnumStatusPedido.Concluído))
+                || (statusPedido == EnumStatusPedido.Concluído && pedido.StatusPedido == EnumStatusPedido.Cancelado)
+                || (statusPedido == EnumStatusPedido.Pendente && (pedido.StatusPedido == EnumStatusPedido.Processando || pedido.StatusPedido == EnumStatusPedido.Concluído || pedido.StatusPedido == EnumStatusPedido.Cancelado)))
+            {
+                throw new ArgumentException("O status do pedido não pode ser alterado");
             }
 
             //Validar status

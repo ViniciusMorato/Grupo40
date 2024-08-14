@@ -1,6 +1,6 @@
 ﻿namespace Core.Enums;
 
-public enum Category
+public enum EnumCategoria
 {
     Lanche,
     Acompanhamento,

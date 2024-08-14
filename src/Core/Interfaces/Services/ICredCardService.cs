@@ -11,7 +11,7 @@ namespace Core.Interfaces.Services
     {
         public CartaoCredito AddNewCredCard(CartaoCredito cartaoCredito);
         public CartaoCredito UpdateCredCard(CartaoCredito cartaoCredito);
-        public void DeleteCredCard(CartaoCredito cartaoCredito);
+        public void DeleteCredCard(int cartaoCreditoId);
         public CartaoCredito GetCredCardById(int id);
         public List<CartaoCredito> GetCredCardByUser(int  userId);
     }

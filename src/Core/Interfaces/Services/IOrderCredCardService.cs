@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
 {
     public interface IOrderCredCardService
     {
-        public PedidoCartaoCredito AddNewOrderCredCard(PedidoCartaoCredito pedidoCartaoCredito);
+        public PedidoCartaoCredito AddNewOrderCredCard(int pedidoId, int cartaoCreditoId);
         public PedidoCartaoCredito UpdateOrderCredCard(PedidoCartaoCredito pedidoCartaoCredito);
         public void DeleteOrderCredCard(PedidoCartaoCredito pedidoCartaoCredito);
         public PedidoCartaoCredito GetOrderCredCardById(int id);

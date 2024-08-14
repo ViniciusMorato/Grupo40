@@ -9,7 +9,7 @@ using Core.Interfaces.Repositories;
 
 namespace Core.Business
 {
-    public class UsuarioEnderecoBusiness(IUserAddressRepository userAddressRepository) : IUserAddressService
+    public class UsuarioEnderecoBusiness(IUserAddressRepository userAddressRepository, IUserRepository userRepository) : IUserAddressService
     {
         public UsuarioEnderecoBusiness AddNewUserAddress(UsuarioEnderecoBusiness usuarioEndereco)
         {
@@ -18,8 +18,13 @@ namespace Core.Business
 
         public UsuarioEndereco AddNewUserAddress(UsuarioEndereco usuarioEndereco)
         {
+            if(userRepository.GetUserById(usuarioEndereco.UsuarioId) == null)
+            {
+                throw new ArgumentException("Usuario não encontrado");
+            }
+
             if (userAddressRepository.CheckAddressExists(usuarioEndereco))
-                throw new ArgumentException("");
+                throw new ArgumentException("Endereço já existe");
 
             userAddressRepository.InsertUpdateUserAddress(usuarioEndereco);
 

@@ -11,17 +11,17 @@ namespace Core.Entities
 
         [Key] public int Id { get; private set; }
 
-        [Required] [MaxLength(100)] public string Nome { get; private set; }
+        [Required] [MaxLength(100)] public string Nome { get; set; }
 
-        [Required] [MaxLength(100)] public string SobreNome { get; private set; }
+        [Required] [MaxLength(100)] public string SobreNome { get; set; }
 
-        [Required] [MaxLength(14)] public string Cpf { get; private set; }
+        [Required] [MaxLength(14)] public string Cpf { get; set; }
 
-        [Required] public string Senha { get; private set; }
+        [Required] public string Senha { get; set; }
 
-        [Required] public string Email { get; private set; }
+        [Required] public string Email { get; set; }
 
-        [Required] public AccessControl Papel { get; private set; }
+        [Required] public EnumAccessControl Papel { get; set; }
         public List<UsuarioEndereco>? UsuarioEnderecos { get; set; } = new List<UsuarioEndereco>();
 
         public void Validade()

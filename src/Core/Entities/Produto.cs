@@ -6,10 +6,10 @@ namespace Core.Entities
     public sealed class Produto
     {
         [Key] public int Id { get; private set; }
-        [Required] [MaxLength(100)] public string Descricao { get; private set; }
-        [Required] public decimal Preco { get; private set; }
-        [Required] public int Estoque { get; private set; }
-        [Required] public Category Categoria { get; private set; }
+        [Required] [MaxLength(100)] public string Descricao { get; set; }
+        [Required] public decimal Preco { get; set; }
+        [Required] public int Estoque { get; set; }
+        [Required] public EnumCategoria Categoria { get; set; }
 
         public void Validade()
         {
@@ -21,7 +21,7 @@ namespace Core.Entities
 
         private void ValidadeCategoria()
         {
-            if (!Enum.IsDefined(typeof(Category), Categoria))
+            if (!Enum.IsDefined(typeof(EnumCategoria), Categoria))
             {
                 throw new ArgumentException("Categoria de produto inválida");
             }

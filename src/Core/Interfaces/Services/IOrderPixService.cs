@@ -9,11 +9,10 @@ namespace Core.Interfaces.Services
 {
     public interface IOrderPixService
     {
-        public PedidoPix AddNewOrderCredCard(PedidoPix pedidoPix);
-        public PedidoPix UpdateOrderCredCard(PedidoPix pedidoPix);
-        public void DeleteOrderCredCard(PedidoPix pedidoPix);
-        public PedidoPix GetOrderCredCardById(int id);
-        public PedidoPix GetOrderCredCardByOrder(int pedidoId);
-        public string GenPixCode(decimal valor);
+        public PedidoPix AddNewOrderPix(int pedidoId);
+        public PedidoPix UpdateOrderPix(PedidoPix pedidoPix);
+        public void DeleteOrderPix(PedidoPix pedidoPix);
+        public PedidoPix GetOrderPixById(int id);
+        public PedidoPix GetOrderPixByOrder(int pedidoId);
     }
 }

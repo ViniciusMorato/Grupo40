@@ -6,6 +6,9 @@ namespace Adapter.Api.DTO;
 
 public class UpdateProductDto
 {
+    [Required(ErrorMessage = "Campo Id é obrigatório")]
+    public int Id {  get; set; }
+
     [Required(ErrorMessage = "Campo Descricao é obrigatório")]
     [MaxLength(100, ErrorMessage = "O campo descrição precisa ser menor que 100 caracteres")]
     public string Descricao { get; set; }
@@ -19,6 +22,6 @@ public class UpdateProductDto
     public int Estoque { get; set; }
 
     [Required(ErrorMessage = "Campo categoria é obrigatório")]
-    [EnumDataType(typeof(Category), ErrorMessage = "Categoria inválida.")]
-    public Category Categoria { get; set; }
+    [EnumDataType(typeof(EnumCategoria), ErrorMessage = "Categoria inválida.")]
+    public EnumCategoria Categoria { get; set; }
 }

@@ -9,9 +9,9 @@ namespace Core.Interfaces.Repositories
 {
     public interface IOrderPixRepository
     {
-        public PedidoPix InsertUpdateOrderCredCard(PedidoPix pedidoPix);
-        public PedidoPix GetOrderCredCardById(int id);
-        public PedidoPix GetOrderCredCardByOrder(int pedidoId);
-        public void DeleteOrderCredCard(PedidoPix pedidoPix);
+        public PedidoPix InsertUpdateOrderPix(PedidoPix pedidoPix);
+        public PedidoPix GetOrderPixById(int id);
+        public PedidoPix GetOrderPixByOrder(int pedidoId);
+        public void DeleteOrderPix(PedidoPix pedidoPix);
     }
 }

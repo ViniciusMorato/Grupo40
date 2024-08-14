@@ -25,23 +25,40 @@ namespace Core.Business
         public PedidoCartaoCredito AddNewOrderCredCard(int pedidoId, int clienteCartaoCreditoId)
         {
             Pedido pedido = _orderRepository.GetOrderById(pedidoId);
-            if (pedido == null) {
+            if (pedido == null)
+            {
                 throw new ArgumentException("Pedido não encontrado!");
             }
 
+            if (pedido.StatusPedido != Enums.EnumStatusPedido.Pendente)
+            {
+                throw new ArgumentException("O status do pedido não permite pagamento!");
+            }
+
+            if (pedido.FormaPagamento != Enums.EnumFormaPagamento.CartaoCredito && pedido.FormaPagamento != Enums.EnumFormaPagamento.CartaoDebito)
+            {
+                throw new ArgumentException("A forma de pagamento do pedido não aceita cartão!");
+            }
+
             CartaoCredito cartaoCredito = _credCardRepository.GetCredCardById(clienteCartaoCreditoId);
-            if (cartaoCredito == null) {
+            if (cartaoCredito == null)
+            {
                 throw new ArgumentException("Cartão de credito não encontrado!");
             }
 
             //RealizaPagamento
 
-            PedidoCartaoCredito pedidoCartaoCredito = new PedidoCartaoCredito() { 
+            PedidoCartaoCredito pedidoCartaoCredito = new PedidoCartaoCredito()
+            {
                 PedidoId = pedidoId,
                 CartaoCreditoId = clienteCartaoCreditoId
             };
 
             pedidoCartaoCredito = _orderCredCardrepository.InsertUpdateOrderCredCard(pedidoCartaoCredito);
+
+            pedido.StatusPedido = Enums.EnumStatusPedido.Concluído;
+
+            _orderRepository.InsertUpdateOrder(pedido);
 
             return pedidoCartaoCredito;
         }

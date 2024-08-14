@@ -126,9 +126,9 @@ namespace Adapter.Api.Controllers
             {
                 CartaoCredito cartaoCredito = _mapper.Map<CartaoCredito>(clienteCartaoCredito);
 
-                _credCardService.AddNewCredCard(cartaoCredito);
+                cartaoCredito = _credCardService.AddNewCredCard(cartaoCredito);
 
-                return Ok();
+                return Ok(_mapper.Map<ReturnClienteCartaoCreditoDto>(cartaoCredito));
             }
             catch (Exception ex)
             {

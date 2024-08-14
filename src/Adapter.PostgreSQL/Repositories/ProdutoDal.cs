@@ -1,6 +1,7 @@
 ﻿using Adapter.PostgreSQL.Context;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adapter.PostgreSQL.Repositories;
 

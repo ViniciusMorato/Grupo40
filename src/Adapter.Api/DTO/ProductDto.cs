@@ -4,33 +4,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Adapter.Api.DTO;
 
-public class ProductDto
+public class ProductDto : AddProductDto
 {
     public int Id { get; set; }
-
-    public string Descricao { get; set; }
-
-    public decimal Preco { get; set; }
-
-    public int Estoque { get; set; }
-
-    public string Categoria { get; set; }
-
-    public ProductDto(int id, string descricao, decimal preco, int estoque, Category categoria)
-    {
-        Id = id;
-        Descricao = descricao;
-        Preco = preco;
-        Estoque = estoque;
-        Categoria = categoria.ToString();
-    }
 }
 
-public class ReturnProductDto
+public class AddProductDto
 {
-    public int Id { get; private set; }
-    public string Descricao { get; private set; }
-    public decimal Preco { get; private set; }
-    public int Estoque { get; private set; }
-    public Category Categoria { get; private set; }
+
+    [Required(ErrorMessage = "Campo Descricao é obrigatório")]
+    [MaxLength(100, ErrorMessage = "O campo Descricao precisa ser menor que 500 caracteres")]
+    public string Descricao { get; set; }
+
+    [Required(ErrorMessage = "Campo Preco é obrigatório")]
+    public decimal Preco { get; set; }
+
+    [Required(ErrorMessage = "Campo Estoque é obrigatório")]
+    public int Estoque { get; set; }
+
+    [Required(ErrorMessage = "Campo Categoria é obrigatório")]
+    public EnumCategoria Categoria { get; set; }
+
 }

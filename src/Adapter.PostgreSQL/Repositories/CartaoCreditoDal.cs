@@ -29,6 +29,11 @@ namespace Adapter.PostgreSQL.Repositories
             return _context.CartaoCredito.FirstOrDefault(cc => cc.Id == id);
         }
 
+        public CartaoCredito GetCredCardByUserAndNumber(int usuarioId, string numero)
+        {
+            return _context.CartaoCredito.FirstOrDefault(c => c.PessoaId == usuarioId && c.Numero == numero);
+        }
+
         public List<CartaoCredito> GetCredCardByUser(int usuarioId)
         {
             return _context.CartaoCredito.Where(cc => cc.PessoaId == usuarioId).ToList();

@@ -18,24 +18,24 @@ namespace Adapter.PostgreSQL.Repositories
             _context = context;
         }
 
-        public void DeleteOrderCredCard(PedidoPix pedidoPix)
+        public void DeleteOrderPix(PedidoPix pedidoPix)
         {
             _context.PedidoPix.Remove(pedidoPix);
         }
 
-        public PedidoPix GetOrderCredCardById(int id)
+        public PedidoPix GetOrderPixById(int id)
         {
             return _context.PedidoPix.FirstOrDefault(pp => pp.Id == id);
         }
 
-        public PedidoPix GetOrderCredCardByOrder(int pedidoId)
+        public PedidoPix GetOrderPixByOrder(int pedidoId)
         {
             return _context.PedidoPix.FirstOrDefault(pp => pp.PedidoId == pedidoId);
         }
 
-        public PedidoPix InsertUpdateOrderCredCard(PedidoPix pedidoPix)
+        public PedidoPix InsertUpdateOrderPix(PedidoPix pedidoPix)
         {
-            if(pedidoPix.Id ==  pedidoPix.PedidoId)
+            if(pedidoPix.Id == 0)
             {
                 _context.PedidoPix.Add(pedidoPix);
             }

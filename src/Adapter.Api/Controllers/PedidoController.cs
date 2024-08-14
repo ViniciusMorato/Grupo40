@@ -19,12 +19,14 @@ namespace Adapter.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IOrderService _orderService;
         private readonly IOrderCredCardService _orderCredCardService;
+        private readonly IOrderPixService _orderPixService;
 
-        public PedidoController(IMapper mapper, IOrderService orderService, IOrderCredCardService orderCredCardService)
+        public PedidoController(IMapper mapper, IOrderService orderService, IOrderCredCardService orderCredCardService, IOrderPixService orderPixService)
         {
             _mapper = mapper;
             _orderService = orderService;
             _orderCredCardService = orderCredCardService;
+            _orderPixService = orderPixService;
         }
 
         [Authorize]
@@ -60,7 +62,7 @@ namespace Adapter.Api.Controllers
             {
                 List<Pedido> pedidos = _orderService.GetOrderByUsuario(cliente);
 
-                if(pedidos == null || pedidos.Count == 0)
+                if (pedidos == null || pedidos.Count == 0)
                 {
                     throw new ArgumentException("Nem um pedido foi encontrado!");
                 }
@@ -94,17 +96,10 @@ namespace Adapter.Api.Controllers
         }
 
         [Authorize]
-        [HttpPost("RealizarPagamentoPorCartao")]
-        public IActionResult RealizarPagamentoPorCartao()
-        {
-            return Ok();
-        }
-
-        [Authorize]
         [HttpPatch("AlterarStatusPedido")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReturnPedidoDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public IActionResult AlterarStatusPedido([Required]int pedidoId, [Required]EnumStatusPedido statusPedido)
+        public IActionResult AlterarStatusPedido([Required] int pedidoId, [Required] EnumStatusPedido statusPedido)
         {
             try
             {
@@ -123,15 +118,36 @@ namespace Adapter.Api.Controllers
             }
         }
 
-        public IActionResult PagarPorCartaoCredito([FromQuery]int pedidoId, [FromQuery]int clienteCartaoCreditoId)
+        [Authorize]
+        [HttpPost("PagarPorCartao")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IActionResult PagarPorCartao([FromQuery] int pedidoId, [FromQuery] int clienteCartaoCreditoId)
         {
-            _orderCredCardService.AddNewOrderCredCard(pedidoId, clienteCartaoCreditoId);
-            return Ok();
+            try
+            {
+                _orderCredCardService.AddNewOrderCredCard(pedidoId, clienteCartaoCreditoId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        public IActionResult PagarPorPix()
+        [Authorize]
+        [HttpPost("GerarCodigoPix")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IActionResult GerarCodigoPix([FromQuery] int pedidoId)
         {
-            return Ok();
+            try
+            {
+                PedidoPix pedidoCartaoCredito = _orderPixService.AddNewOrderPix(pedidoId);
+                return Ok(_mapper.Map<ReturnPedidoPix>(pedidoCartaoCredito));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

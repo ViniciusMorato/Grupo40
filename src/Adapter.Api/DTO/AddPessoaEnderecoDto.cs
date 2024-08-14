@@ -5,38 +5,24 @@ namespace Adapter.Api.DTO
 {
     public class AddPessoaEnderecoDto
     {
-        [Required(ErrorMessage = "")]
-        public int UsuarioId { get; set; }
+        [Required(ErrorMessage = "Campo Cliente é obrigatório")]
+        public int Cliente { get; set; }
 
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Campo Rua é obrigatório")]
         public string Rua { get; set; }
 
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Campo Bairro é obrigatório")]
         public string Bairro { get; set; }
 
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Campo Numero é obrigatório")]
         public string Numero { get; set; }
 
         public string Complemento { get; set; }
     }
 
-    public class ReturnPessoaEnderecoDto
+    public class ReturnPessoaEnderecoDto : AddPessoaEnderecoDto
     {
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Campo Id é obrigatório")]
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "")]
-        public int Cliente { get; set; }
-
-        [Required(ErrorMessage = "")]
-        public string Rua { get; set; }
-
-        [Required(ErrorMessage = "")]
-        public string Bairro { get; set; }
-
-        [Required(ErrorMessage = "")]
-        public string Numero { get; set; }
-
-        public string Complemento { get; set; }
     }
 }

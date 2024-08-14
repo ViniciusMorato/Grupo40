@@ -23,6 +23,28 @@ namespace Core.Business
                 throw new ArgumentException("Usuario não encontrado");
             }
 
+            if (cartaoCredito.CVV.Length != 3)
+            {
+                throw new ArgumentException("CVV invalido");
+            }
+
+            if (cartaoCredito.Vencimento.Length < 5 || (int.Parse(cartaoCredito.Vencimento.Split("/")[0]) <= 0 || int.Parse(cartaoCredito.Vencimento.Split("/")[0]) > 12) || int.Parse(cartaoCredito.Vencimento.Split("/")[1]) < int.Parse(DateTime.Now.ToString("yy")))
+            {
+                throw new ArgumentException("Vencimento invalido!");
+            }
+
+            if (int.Parse(cartaoCredito.Vencimento.Split("/")[1]) == int.Parse(DateTime.Now.ToString("yy")) && int.Parse(cartaoCredito.Vencimento.Split("/")[0]) <= DateTime.Now.Month)
+            {
+                throw new ArgumentException("O cartão se encontra vencido");
+            }
+
+            CartaoCredito cartaoExiste = credCardRepository.GetCredCardByUserAndNumber(cartaoCredito.PessoaId, cartaoCredito.Numero);
+
+            if (cartaoExiste != null)
+            {
+                throw new ArgumentException("Cartão de credito já cadastrado");
+            }
+
             cartaoCredito = credCardRepository.InsertUpdateCredCard(cartaoCredito);
 
             return cartaoCredito;
@@ -46,7 +68,7 @@ namespace Core.Business
 
         public List<CartaoCredito> GetCredCardByUser(int userId)
         {
-            if(userId <= 0 || userRepository.GetUserById(userId) == null)
+            if (userId <= 0 || userRepository.GetUserById(userId) == null)
             {
                 throw new ArgumentException("Usuario não encontrado");
             }

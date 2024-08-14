@@ -7,6 +7,6 @@ public interface IProductService
     Produto AddNewProduct(Produto product);
     Produto? GetProductById(int id);
     List<Produto> GetProducts();
-    Produto? UpdateProduct(Produto product);
-    void DeleteProduct(Produto product);
+    Produto UpdateProduct(Produto product);
+    void DeleteProduct(int id);
 }

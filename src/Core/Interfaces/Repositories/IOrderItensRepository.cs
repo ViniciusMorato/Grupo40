@@ -10,6 +10,7 @@ namespace Core.Interfaces.Repositories
     public interface IOrderItensRepository
     {
         List<PedidoItem>? GetOrderItensByPedido(int pedido);
+        bool CheckProducIsUsedByOrder(int produto);
         List<PedidoItem> InsertRangeOrderItem(List<PedidoItem> orderItens);
     }
 }

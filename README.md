@@ -14,6 +14,7 @@ O objetivo do desenvolvimento é apoiar uma lanchonete de bairro em rápida expa
 - [Requisitos](#requisitos)
 - [Estrutura](#estrutura)
 - [Executando](#executando)
+- [Campos Enums](#campos-enums)
 
 
 ## Propósito
@@ -253,3 +254,37 @@ cd Grupo40
 docker-compose up --build
 ```
 3. Acesse o endpoint de documentação `swagger` no navegador `http://localhost:5058/swagger`
+
+
+## Campos Enums
+
+### EnumAccessControl
+
+- Admin = 1
+- User  = 2
+
+### EnumCategoria
+
+- Lanche = 1
+- Acompanhamento = 2
+- Bebida = 3
+- Sobremesa = 4
+
+### EnumFormaPagamento
+
+- CartaoCredito = 1
+- CartaoDebito = 2
+- Dinheiro = 3
+- Pix = 4
+
+### EnumStatusPedido
+
+- Pendente = 1
+- Processando = 2
+- Concluído = 3
+- Cancelado = 4
+
+### EnumTipoCartao
+
+- Credito = 1
+- Debito = 2
